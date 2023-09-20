@@ -20,4 +20,5 @@ from recipes.views import home
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
+    path('accounts/', include('allauth.urls')),
 ]
