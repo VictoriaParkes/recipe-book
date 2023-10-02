@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
+from autoslug import AutoSlugField
 
 # choices
 RECIPE_COURSE = (
@@ -12,13 +13,19 @@ RECIPE_COURSE = (
     ('snack', 'Snack'),
 )
 
+APPROVAL_STATUS = (
+    ('0', 'Pending Approval'),
+    ('1', 'Approved'),
+    ('2', 'Rejected'),
+)
+
 
 # recipe model
 class Recipe(models.Model):
-    title = models.CharField(max_length=200, unique=True)
-    slug = models.SlugField(max_length=200, unique=True)
+    title = models.CharField(max_length=200)
+    slug = AutoSlugField(populate_from='title', unique=True)
     author = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='recipe_author'
+        User, on_delete=models.CASCADE, related_name='recipes'
     )
     recipe_image = CloudinaryField('image', default='placeholder')
     course = models.CharField(max_length=50, choices=RECIPE_COURSE)
@@ -28,7 +35,7 @@ class Recipe(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     publish_request = models.BooleanField(default=False)
-    publish_approved = models.BooleanField(default=False)
+    publish_approved = models.CharField(max_length=50, choices=APPROVAL_STATUS, default=0)
     likes = models.ManyToManyField(
         User, related_name='recipe_like', blank=True)
 
