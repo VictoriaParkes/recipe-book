@@ -5,12 +5,15 @@
 
 <h1>Add Recipe</h1>
 <form action="POST">
-
+    {% csrf_token %}
     <div>
         {{ recipe_details_form | crispy }}
     </div>
     <div>
-        {{ ingredients_formset | crispy }}
+        <!-- {{ ingredients_formset.management_form | crispy }} -->
+        <table>
+            {{ ingredients_formset | crispy }}
+        </table>
         <button>Add Ingredients</button>
     </div>
     <div>
@@ -20,8 +23,8 @@
     <div>
         {{ request_publish | crispy }}
     </div>
-    {% csrf_token %}
-    <button>submit</button>
+
+    <input type="submit" value="Submit">
 </form>
 
 {%endblock%}
