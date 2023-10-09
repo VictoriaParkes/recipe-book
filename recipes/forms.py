@@ -1,17 +1,27 @@
 from django import forms
-from django.forms import ModelForm, formset_factory, modelformset_factory, MultiWidget, MultiValueField, TextInput
+from django.forms import (
+    Form,
+    ModelForm,
+    MultiWidget,
+    MultiValueField,
+    MultipleChoiceField,
+    TextInput,
+    SelectMultiple,
+    formset_factory
+)
+from . import models
 from .models import Recipe
+from django_jsonform.widgets import JSONFormWidget
+
 
 class RecipeDetailsForm(ModelForm):
+
     class Meta:
         model = Recipe
-        fields = ('title', 'recipe_image', 'course', 'description', )
-        labels = {
-            'title': 'Recipe Title',
-            'recipe_image': 'Image',
-            'course': 'Course',
-            'description': 'Recipe Description'
-        }
+        fields = ['title', 'recipe_image', 'tags', 'description']
+        
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
 
 class IngredientsWidget(MultiWidget, TextInput):
     def __init__(self):
@@ -23,33 +33,32 @@ class IngredientsWidget(MultiWidget, TextInput):
 
     def decompress(self, value):
         if value:
-            return value.split(' ')
+            return [value['ingredient'], value['amount']]
         return ['', '']
     
-# class IngredientsField(MultiValueField):
-#     widget = IngredientsWidget
+class IngredientsField(MultiValueField):
+    widget = IngredientsWidget()
 
-#     fields = (
-#         forms.CharField(),
-#         forms.CharField()
-#     )
+    def __init__(self, *args, **kwargs):
+        fields = [
+            forms.CharField(max_length=50),
+            forms.CharField(max_length=50)
+        ]
+        super().__init__(fields, *args, **kwargs)
 
-#     def compress(self, input_list):
-#         return ''.join(input_list)
+    def compress(self, input_list):
+        ingredients_dict = dict(ingredient = input_list[0], amount = input_list[1])
+        return ingredients_dict
 
-IngredientsFormset = modelformset_factory(
-    Recipe,
-    fields=('ingredients', ),
-    # extra=1,
-    widgets={'ingredients': IngredientsWidget()}
-)
+class IngredientsForm(Form):
+    ingredients = IngredientsField(label='')
 
-MethodFormset = modelformset_factory(
-    Recipe,
-    fields=('method', ),
-    # extra=1,
-    widgets={'method': TextInput()}
-)
+class MethodForm(Form):
+    method = forms.CharField(label='', widget=TextInput(attrs={'placeholder': 'Enter method step'}))
+
+IngredientsFormset = formset_factory(IngredientsForm)
+
+MethodFormset = formset_factory(MethodForm)
 
 class RequestPublish(ModelForm):
     class Meta:
@@ -58,3 +67,23 @@ class RequestPublish(ModelForm):
         labels = {
             'publish_request': 'Make Public'
         }
+
+
+
+# class RecipeDetailsForm(ModelForm):
+#     class Meta:
+#         model = Recipe
+#         fields = ('title', 'recipe_image', 'course', 'description', )
+#         labels = {
+#             'title': 'Recipe Title',
+#             'recipe_image': 'Image',
+#             'course': 'Course',
+#             'description': 'Recipe Description'
+#         }
+
+# class RecipeAdminForm(ModelForm):
+#     class Meta:
+#         model = Recipe
+#         widgets = {
+#             'ingredients': IngredientsWidget(),
+#         }

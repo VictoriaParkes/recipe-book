@@ -5,9 +5,11 @@ from django.views import generic, View
 from django.views.generic.edit import CreateView  #, UpdateView
 from .models import Recipe
 from .forms import RecipeDetailsForm, IngredientsFormset, MethodFormset, RequestPublish
-# from django.contrib import messages
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.urls import reverse_lazy
+# from django.contrib.auth.decorators import login_required
+import json
 
 def home(request):
 
@@ -18,19 +20,42 @@ def home(request):
 
     return render(request, template, context)
 
+class CreateRecipe(LoginRequiredMixin, CreateView):
+    """
+    Recipe Add View
+    """
+    model = Recipe
+    form_class = RecipeDetailsForm
+    template_name = 'create_recipe.html'
+    success_url = reverse_lazy('home')
 
-class CreateRecipe(CreateView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['ingredients_formset'] = IngredientsFormset(self.request.POST, prefix='ingredients')
+            context['method_formset'] = MethodFormset(self.request.POST, prefix='method')
+            context['request_publish'] = RequestPublish(self.request.POST, prefix='request')
+        else:
+            context['ingredients_formset'] = IngredientsFormset(prefix='ingredients')
+            context['method_formset'] = MethodFormset(prefix='method')
+            context['request_publish'] = RequestPublish(prefix='request')
+        return context
 
-    def get(self, request):
+    def form_valid(self, form):
+        context = self.get_context_data()
+        ingredients_formset = context['ingredients_formset']
+        method_formset = context['method_formset']
+        request_publish = context['request_publish']
 
-        return render(
-            request,
-            'create_recipe.html',
-            {
-                'page_title': 'Create Recipe',
-                'recipe_details_form': RecipeDetailsForm(prefix='details'),
-                'ingredients_formset': IngredientsFormset(prefix='ingredients'),
-                'method_formset': MethodFormset(prefix='method'),
-                'request_publish': RequestPublish(prefix='request')
-            },
-        )
+        if ingredients_formset.is_valid() and method_formset.is_valid() and request_publish.is_valid():
+            ingredients_input = ingredients_formset.cleaned_data
+            ingredients_json = json.dumps(ingredients_input)
+            method_input = method_formset.cleaned_data
+            method_json = json.dumps(method_input)
+
+            form.instance.author = self.request.user
+            form.instance.ingredients = ingredients_json
+            form.instance.method = method_json
+            form.instance.request_publish = request_publish
+            messages.success(self.request, "Recipe Successfully Created and Awaiting Approval")
+            return super().form_valid(form)

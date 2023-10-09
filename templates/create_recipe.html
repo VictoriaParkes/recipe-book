@@ -4,21 +4,26 @@
 {% load crispy_forms_tags %}
 
 <h1>Add Recipe</h1>
-<form action="POST">
+<form method="POST">
     {% csrf_token %}
     <div>
-        {{ recipe_details_form | crispy }}
+        {{ form | crispy }}
     </div>
     <div>
-        <!-- {{ ingredients_formset.management_form | crispy }} -->
-        <table>
-            {{ ingredients_formset | crispy }}
-        </table>
-        <button>Add Ingredients</button>
+        {{ ingredients_formset.management_form }}
+    <table>
+        {% for form in ingredients_formset %}
+        {{ form | crispy }}
+        {% endfor %}
+    </table>
     </div>
     <div>
-        {{ method_formset | crispy }}
-        <button>Add Method Steps</button>
+        {{ method_formset.management_form }}
+    <table>
+        {% for form in method_formset %}
+        {{ form | crispy }}
+        {% endfor %}
+    </table>
     </div>
     <div>
         {{ request_publish | crispy }}
