@@ -11,19 +11,31 @@
     </div>
     <div>
         {{ ingredients_formset.management_form }}
-    <table>
-        {% for form in ingredients_formset %}
-        {{ form | crispy }}
-        {% endfor %}
-    </table>
+        <table id="ingredients-formset">
+            <tbody>
+                {% for form in ingredients_formset %}
+                <tr>
+                    <td>
+                        {{ form | crispy }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
     <div>
         {{ method_formset.management_form }}
-    <table>
-        {% for form in method_formset %}
-        {{ form | crispy }}
-        {% endfor %}
-    </table>
+        <table id="method-formset">
+            <tbody>
+                {% for form in method_formset %}
+                <tr>
+                    <td>
+                        {{ form | crispy }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
     <div>
         {{ request_publish | crispy }}

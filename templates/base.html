@@ -18,6 +18,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap" rel="stylesheet">
+    <!-- JQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <title>Recipe Book | {{ page_title }}</title>
 </head>
 <body>
@@ -79,5 +81,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+    <script src="{% static 'libraries/jquery.formset.js' %}"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('#ingredients-formset tbody tr').formset({
+                prefix: '{{ ingredients_formset.prefix }}',
+                formCssClass: 'dynamic-ingredients-formset'
+            });
+            $('#method-formset tbody tr').formset({
+                prefix: '{{ method_formset.prefix }}',
+                formCssClass: 'dynamic-method-formset'
+            });
+        })
+    </script>
 </body>
 </html>

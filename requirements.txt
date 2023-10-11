@@ -7,7 +7,7 @@ Django==3.2.21
 django-allauth==0.56.1
 django-autoslug==1.9.9
 django-crispy-forms==1.14.0
-django-jsonform==2.19.1
+django-taggit==4.0.0
 gunicorn==21.2.0
 oauthlib==3.2.2
 psycopg2==2.9.7

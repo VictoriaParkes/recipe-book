@@ -4,15 +4,13 @@ from django.forms import (
     ModelForm,
     MultiWidget,
     MultiValueField,
-    MultipleChoiceField,
     TextInput,
+    Textarea,
     SelectMultiple,
     formset_factory
 )
 from . import models
 from .models import Recipe
-from django_jsonform.widgets import JSONFormWidget
-
 
 class RecipeDetailsForm(ModelForm):
 
@@ -54,7 +52,7 @@ class IngredientsForm(Form):
     ingredients = IngredientsField(label='')
 
 class MethodForm(Form):
-    method = forms.CharField(label='', widget=TextInput(attrs={'placeholder': 'Enter method step'}))
+    method = forms.CharField(label='', widget=Textarea(attrs={'placeholder': 'Enter method step'}))
 
 IngredientsFormset = formset_factory(IngredientsForm)
 
@@ -68,18 +66,6 @@ class RequestPublish(ModelForm):
             'publish_request': 'Make Public'
         }
 
-
-
-# class RecipeDetailsForm(ModelForm):
-#     class Meta:
-#         model = Recipe
-#         fields = ('title', 'recipe_image', 'course', 'description', )
-#         labels = {
-#             'title': 'Recipe Title',
-#             'recipe_image': 'Image',
-#             'course': 'Course',
-#             'description': 'Recipe Description'
-#         }
 
 # class RecipeAdminForm(ModelForm):
 #     class Meta:
