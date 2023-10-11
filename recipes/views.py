@@ -57,5 +57,9 @@ class CreateRecipe(LoginRequiredMixin, CreateView):
             form.instance.ingredients = ingredients_json
             form.instance.method = method_json
             form.instance.request_publish = request_publish
-            messages.success(self.request, "Recipe Successfully Created and Awaiting Approval")
+            if request_publish == True:
+                form.instance.approval_status = 1
+                messages.success(self.request, 'Recipe Successfully Created and Awaiting Approval')
+            else:
+                messages.success(self.request, 'Recipe Successfully Created')
             return super().form_valid(form)

@@ -4,5 +4,5 @@ from .models import Recipe
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
-    list_filter = ['publish_approved']
-    list_display = ('title', 'publish_request', 'publish_approved', 'created_on')
+    list_filter = ['approval_status']
+    list_display = ('title', 'publish_request', 'approval_status', 'created_on')

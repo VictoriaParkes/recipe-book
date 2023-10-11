@@ -6,9 +6,10 @@ from taggit.managers import TaggableManager
 
 # Approval status choices
 APPROVAL_STATUS = (
-    ('0', 'Pending Approval'),
-    ('1', 'Approved'),
-    ('2', 'Rejected'),
+    ('0', 'Unpublished'),
+    ('1', 'Pending Approval'),
+    ('2', 'Approved'),
+    ('3', 'Rejected'),
 )
 
 
@@ -20,14 +21,14 @@ class Recipe(models.Model):
         User, on_delete=models.CASCADE, related_name='recipes'
     )
     recipe_image = CloudinaryField('image', default='placeholder')
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
     description = models.TextField(blank=True)
     ingredients = models.JSONField(null=False)
     method = models.JSONField(null=False)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     publish_request = models.BooleanField(default=False)
-    publish_approved = models.CharField(max_length=50, choices=APPROVAL_STATUS, default=0)
+    approval_status = models.CharField(max_length=50, choices=APPROVAL_STATUS, default=0)
 
     class Meta:
         ordering = ['-created_on']
