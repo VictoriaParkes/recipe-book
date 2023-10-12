@@ -16,8 +16,11 @@ class RecipeDetailsForm(ModelForm):
 
     class Meta:
         model = Recipe
-        fields = ['title', 'recipe_image', 'tags', 'description']
-        
+        fields = ['title', 'recipe_image', 'tags', 'description', 'publish_request']
+        labels = {
+            'publish_request': 'Make Public'
+        }
+
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
 
@@ -39,8 +42,8 @@ class IngredientsField(MultiValueField):
 
     def __init__(self, *args, **kwargs):
         fields = [
-            forms.CharField(max_length=50),
-            forms.CharField(max_length=50)
+            forms.CharField(max_length=50, error_messages={'required': 'Please enter an ingredient or delete the empty field'}, required=True),
+            forms.CharField(max_length=50, error_messages={'required': 'Please enter the required amount of ingredient'}, required=True)
         ]
         super().__init__(fields, *args, **kwargs)
 
@@ -52,7 +55,12 @@ class IngredientsForm(Form):
     ingredients = IngredientsField(label='')
 
 class MethodForm(Form):
-    method = forms.CharField(label='', widget=Textarea(attrs={'placeholder': 'Enter method step'}))
+    method = forms.CharField(
+        label='',
+        widget=Textarea(attrs={'placeholder': 'Enter method step'}),
+        error_messages={'required': 'Please enter a step for the method or delete the empty field'},
+        required=True
+    )
 
 IngredientsFormset = formset_factory(IngredientsForm)
 

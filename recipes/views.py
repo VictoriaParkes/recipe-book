@@ -4,7 +4,7 @@ from django.views import generic, View
 # from django.views.generic import ListView
 from django.views.generic.edit import CreateView  #, UpdateView
 from .models import Recipe
-from .forms import RecipeDetailsForm, IngredientsFormset, MethodFormset, RequestPublish
+from .forms import RecipeDetailsForm, IngredientsFormset, MethodFormset
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -34,30 +34,25 @@ class CreateRecipe(LoginRequiredMixin, CreateView):
         if self.request.POST:
             context['ingredients_formset'] = IngredientsFormset(self.request.POST, prefix='ingredients')
             context['method_formset'] = MethodFormset(self.request.POST, prefix='method')
-            context['request_publish'] = RequestPublish(self.request.POST, prefix='request')
         else:
             context['ingredients_formset'] = IngredientsFormset(prefix='ingredients')
             context['method_formset'] = MethodFormset(prefix='method')
-            context['request_publish'] = RequestPublish(prefix='request')
         return context
 
     def form_valid(self, form):
         context = self.get_context_data()
         ingredients_formset = context['ingredients_formset']
         method_formset = context['method_formset']
-        request_publish = context['request_publish']
 
-        if ingredients_formset.is_valid() and method_formset.is_valid() and request_publish.is_valid():
+        if ingredients_formset.is_valid() and method_formset.is_valid():
             ingredients_input = ingredients_formset.cleaned_data
             ingredients_json = json.dumps(ingredients_input)
             method_input = method_formset.cleaned_data
             method_json = json.dumps(method_input)
-
             form.instance.author = self.request.user
             form.instance.ingredients = ingredients_json
             form.instance.method = method_json
-            form.instance.request_publish = request_publish
-            if request_publish == True:
+            if form.instance.publish_request:
                 form.instance.approval_status = 1
                 messages.success(self.request, 'Recipe Successfully Created and Awaiting Approval')
             else:

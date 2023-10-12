@@ -7,7 +7,16 @@
 <form method="POST">
     {% csrf_token %}
     <div>
-        {{ form | crispy }}
+        {{ form.title | as_crispy_field }}
+    </div>
+    <div>
+        {{ form.description | as_crispy_field }}
+    </div>
+    <div>
+        {{ form.recipe_image | as_crispy_field }}
+    </div>
+    <div>
+        {{ form.tags | as_crispy_field }}
     </div>
     <div>
         {{ ingredients_formset.management_form }}
@@ -38,7 +47,7 @@
         </table>
     </div>
     <div>
-        {{ request_publish | crispy }}
+        {{ form.publish_request | as_crispy_field }}
     </div>
 
     <input type="submit" value="Submit">
