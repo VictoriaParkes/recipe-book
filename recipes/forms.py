@@ -27,8 +27,8 @@ class RecipeDetailsForm(ModelForm):
 class IngredientsWidget(MultiWidget, TextInput):
     def __init__(self):
         widgets = [
-            forms.TextInput(attrs={'placeholder': 'Enter Ingredient'}),
-            forms.TextInput(attrs={'placeholder': 'Enter Amount'})
+            forms.TextInput(attrs={'placeholder': 'Enter Ingredient', 'required': True}),
+            forms.TextInput(attrs={'placeholder': 'Enter Amount', 'required': True})
         ]
         super().__init__(widgets)
 
@@ -40,15 +40,15 @@ class IngredientsWidget(MultiWidget, TextInput):
 class IngredientsField(MultiValueField):
     widget = IngredientsWidget()
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         fields = [
-            forms.CharField(max_length=50, error_messages={'required': 'Please enter an ingredient or delete the empty field'}, required=True),
-            forms.CharField(max_length=50, error_messages={'required': 'Please enter the required amount of ingredient'}, required=True)
+            forms.CharField(max_length=50),
+            forms.CharField(max_length=50),
         ]
-        super().__init__(fields, *args, **kwargs)
+        super().__init__(fields=fields, **kwargs)
 
-    def compress(self, input_list):
-        ingredients_dict = dict(ingredient = input_list[0], amount = input_list[1])
+    def compress(self, data_list):
+        ingredients_dict = dict(ingredient = data_list[0], amount = data_list[1])
         return ingredients_dict
 
 class IngredientsForm(Form):
@@ -57,22 +57,20 @@ class IngredientsForm(Form):
 class MethodForm(Form):
     method = forms.CharField(
         label='',
-        widget=Textarea(attrs={'placeholder': 'Enter method step'}),
-        error_messages={'required': 'Please enter a step for the method or delete the empty field'},
-        required=True
+        widget=Textarea(attrs={'placeholder': 'Enter method step', 'required': True})
     )
 
 IngredientsFormset = formset_factory(IngredientsForm)
 
 MethodFormset = formset_factory(MethodForm)
 
-class RequestPublish(ModelForm):
-    class Meta:
-        model = Recipe
-        fields = ('publish_request', )
-        labels = {
-            'publish_request': 'Make Public'
-        }
+# class RequestPublish(ModelForm):
+#     class Meta:
+#         model = Recipe
+#         fields = ('publish_request', )
+#         labels = {
+#             'publish_request': 'Make Public'
+#         }
 
 
 # class RecipeAdminForm(ModelForm):
