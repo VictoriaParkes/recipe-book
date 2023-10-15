@@ -20,11 +20,15 @@
     </div>
     <div>
         {{ ingredients_formset.management_form }}
+        <label for="id_ingredients-0-ingredients_0">Ingredients</label>
         <table id="ingredients-formset">
             <tbody>
                 {% for form in ingredients_formset %}
                 <tr>
                     <td>
+                        <!-- {% for field in form %}
+                        {{ field }}
+                        {% endfor %} -->
                         {{ form | crispy }}
                     </td>
                 </tr>
@@ -34,6 +38,7 @@
     </div>
     <div>
         {{ method_formset.management_form }}
+        <label for="id_method-0-method">Method</label>
         <table id="method-formset">
             <tbody>
                 {% for form in method_formset %}

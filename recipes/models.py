@@ -12,22 +12,21 @@ APPROVAL_STATUS = (
     ('3', 'Rejected'),
 )
 
-
 # recipe model
 class Recipe(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, help_text= 'Required, max length 200 characters.')
     slug = AutoSlugField(populate_from='title', unique=True)
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='recipes'
     )
     recipe_image = CloudinaryField('image', default='placeholder')
     tags = TaggableManager(blank=True)
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True, help_text= 'Optional.')
     ingredients = models.JSONField(null=False)
     method = models.JSONField(null=False)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
-    publish_request = models.BooleanField(default=False)
+    publish_request = models.BooleanField(default=False, help_text= 'Check this box to submit your recipe for online publication.')
     approval_status = models.CharField(max_length=50, choices=APPROVAL_STATUS, default=0)
 
     class Meta:
