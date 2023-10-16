@@ -28,9 +28,46 @@ class Recipe(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
     publish_request = models.BooleanField(default=False, help_text= 'Check this box to submit your recipe for online publication.')
     approval_status = models.CharField(max_length=50, choices=APPROVAL_STATUS, default=0)
+    likes = models.ManyToManyField(
+        User, related_name='recipe_like', blank=True)
 
     class Meta:
         ordering = ['-created_on']
 
     def __str__(self):
         return self.title
+    
+    def number_of_likes(self):
+        return self.likes.count()
+
+# comment model.
+class Comment(models.Model):
+    recipe = models.ForeignKey(
+        Recipe, on_delete=models.CASCADE, related_name='comments'
+    )
+    name = models.CharField(max_length=80)
+    body = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    approved = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['created_on']
+
+    def __str__(self):
+        return f'Comment {self.body} by {self.name}'
+
+# Save recipe model
+class Saves(models.Model):
+    recipe = models.ForeignKey(
+        Recipe, on_delete=models.CASCADE, related_name='saves'
+    )
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='save_user'
+    )
+    saved_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['saved_on']
+    
+    def __str__(self):
+        return f'Recipe saved by {self.user}'
