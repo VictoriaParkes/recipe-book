@@ -1,0 +1,66 @@
+from django.test import TestCase
+from .forms import *
+
+class TestRecipeDetailsForm(TestCase):
+
+    def test_title_is_required(self):
+        form = RecipeDetailsForm({'title': ''})
+        self.assertFalse(form.is_valid())
+        self.assertIn('title', form.errors.keys())
+        self.assertEqual(form.errors['title'][0], 'This field is required.')
+    
+    def test_remaining_fields_not_required(self):
+        form = RecipeDetailsForm({'title': 'Test'})
+        self.assertTrue(form.is_valid())
+
+    def test_fields_are_explicit_in_form_metaclass(self):
+        form = RecipeDetailsForm()
+        self.assertEqual(form.Meta.fields, ['title', 'recipe_image', 'tags', 'description', 'publish_request'])
+
+class TestIngredientsForm(TestCase):
+
+    def test_ingredient_is_required(self):
+        form = IngredientsForm({'ingredients': {'ingredient': '', 'amount': '2 slices'}})
+        self.assertFalse(form.is_valid())
+        self.assertIn('ingredients', form.errors.keys())
+        self.assertEqual(form.errors['ingredients'][0], 'This field is required.')
+    
+    def test_amount_is_required(self):
+        form = IngredientsForm({'ingredients': {'ingredient': 'bread', 'amount': ''}})
+        self.assertFalse(form.is_valid())
+        self.assertIn('ingredients', form.errors.keys())
+        self.assertEqual(form.errors['ingredients'][0], 'This field is required.')
+    
+    def test_ingredients_formset(self):
+        data = {
+            'form-INITIAL_FORMS': '0',
+            'form-TOTAL_FORMS': '2',
+            'form-0-ingredients_0': 'bread',
+            'form-0-ingredients_1': '2 slices',
+            'form-1-ingredients_0': 'ham',
+            'form-1-ingredients_1': '2 slices',
+        }
+        formset = IngredientsFormset(data)
+        self.assertTrue(formset.is_valid())
+    
+    def test_ingredients_multiwidget(self):
+        widget = IngredientsWidget()
+        self.assertEqual(widget.render('ingredients', ['bread', '2 slices']))
+
+class TestMethodForm(TestCase):
+
+    def test_method_is_required(self):
+        form = MethodForm({'method': ''})
+        self.assertFalse(form.is_valid())
+        self.assertIn('method', form.errors.keys())
+        self.assertEqual(form.errors['method'][0], 'This field is required.')
+    
+    def test_method_formset(self):
+        data = {
+            'form-INITIAL_FORMS': '0',
+            'form-TOTAL_FORMS': '2',
+            'form-0-method': 'step 1',
+            'form-1-method': 'step 2',
+        }
+        formset = MethodFormset(data)
+        self.assertTrue(formset.is_valid())
