@@ -16,7 +16,7 @@ class RecipeDetailsForm(ModelForm):
 
     class Meta:
         model = Recipe
-        fields = ['title', 'recipe_image', 'tags', 'description', 'publish_request']
+        fields = ['title', 'recipe_image', 'tags', 'description', 'cooking_time', 'serves', 'publish_request']
         labels = {
             'publish_request': 'Make Public'
         }

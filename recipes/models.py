@@ -12,6 +12,14 @@ APPROVAL_STATUS = (
     ('3', 'Rejected'),
 )
 
+COOKING_TIME = (
+    ('0', '<30 minutes'),
+    ('1', '30 minutes-1 hour'),
+    ('2', '1-2 hours'),
+    ('3', '2-3 hours'),
+    ('4', '3+ hours'),
+)
+
 # recipe model
 class Recipe(models.Model):
     title = models.CharField(max_length=200, help_text= 'Required, max length 200 characters.')
@@ -22,6 +30,8 @@ class Recipe(models.Model):
     recipe_image = CloudinaryField('image', default='placeholder')
     tags = TaggableManager(blank=True)
     description = models.TextField(blank=True, help_text= 'Optional.')
+    cooking_time = models.CharField(max_length=50, choices=COOKING_TIME, help_text= 'Select how long your recipe takes to prepare.')
+    serves = models.IntegerField(help_text= 'Enter how many people your recipes serves.')
     ingredients = models.JSONField(null=False)
     method = models.JSONField(null=False)
     created_on = models.DateTimeField(auto_now_add=True)

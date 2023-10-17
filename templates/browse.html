@@ -27,7 +27,9 @@
                                 </div>
                                 <h2 class="card-title">{{ recipe.title }}</h2>
                                 <hr />
-                                <p class="author">Author: {{ recipe.author }}</p>
+                                <p class="author">Shared by {{ recipe.author }}</p>
+                                <p><i class="far fa-clock"></i> Time to prepare: {{ recipe.get_cooking_time_display }}</p>
+                                <p><i class="fas fa-utensils"></i> Serves: {{ recipe.serves }}</p>
                                 <p class="card-text text-muted h6">{{ recipe.created_on }}</p>
                             </div>
                         </a>
