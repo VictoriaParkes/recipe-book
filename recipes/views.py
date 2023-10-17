@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import generic, View
-# from django.views.generic import ListView
+from django.views.generic import ListView
 from django.views.generic.edit import CreateView  #, UpdateView
 from .models import Recipe
 from .forms import RecipeDetailsForm, IngredientsFormset, MethodFormset
@@ -19,6 +19,12 @@ def home(request):
     }
 
     return render(request, template, context)
+
+class Browse(ListView):
+    model = Recipe
+    queryset = Recipe.objects.filter(publish_request=True, approval_status=2).order_by('-created_on')
+    template_name = 'browse.html'
+    paginate_by = 12
 
 class CreateRecipe(LoginRequiredMixin, CreateView):
     """
