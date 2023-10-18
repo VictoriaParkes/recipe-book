@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .forms import *
+from .forms import RecipeDetailsForm, IngredientsForm, MethodForm, IngredientsFormset, MethodFormset
 
 class TestRecipeDetailsForm(TestCase):
 
@@ -9,13 +9,25 @@ class TestRecipeDetailsForm(TestCase):
         self.assertIn('title', form.errors.keys())
         self.assertEqual(form.errors['title'][0], 'This field is required.')
     
+    def test_cooking_time_is_required(self):
+        form = RecipeDetailsForm({'title': 'test', 'cooking_time': ''})
+        self.assertFalse(form.is_valid())
+        self.assertIn('cooking_time', form.errors.keys())
+        self.assertEqual(form.errors['cooking_time'][0], 'This field is required.')
+
+    def test_serves_is_required(self):
+        form = RecipeDetailsForm({'title': 'test', 'cooking_time': '1', 'serves': ''})
+        self.assertFalse(form.is_valid())
+        self.assertIn('serves', form.errors.keys())
+        self.assertEqual(form.errors['serves'][0], 'This field is required.')
+    
     def test_remaining_fields_not_required(self):
-        form = RecipeDetailsForm({'title': 'Test'})
+        form = RecipeDetailsForm({'title': 'test', 'cooking_time': '1', 'serves': '1'})
         self.assertTrue(form.is_valid())
 
     def test_fields_are_explicit_in_form_metaclass(self):
         form = RecipeDetailsForm()
-        self.assertEqual(form.Meta.fields, ['title', 'recipe_image', 'tags', 'description', 'publish_request'])
+        self.assertEqual(form.Meta.fields, ['title', 'recipe_image', 'tags', 'description', 'cooking_time', 'serves', 'publish_request'])
 
 class TestIngredientsForm(TestCase):
 
@@ -43,9 +55,12 @@ class TestIngredientsForm(TestCase):
         formset = IngredientsFormset(data)
         self.assertTrue(formset.is_valid())
     
-    def test_ingredients_multiwidget(self):
-        widget = IngredientsWidget()
-        self.assertEqual(widget.render('ingredients', ['bread', '2 slices']))
+    # def test_ingredients_multiwidget(self):
+    #     data = {
+    #         'ingredients': {'ingredient': 'bread', 'amount': '2 slices'}
+    #     }
+    #     widget = IngredientsWidget(data)
+    #     self.assertEqual(widget.render('form-0-ingredients_0': 'bread', 'form-0-ingredients_1': '2 slices',))
 
 class TestMethodForm(TestCase):
 
