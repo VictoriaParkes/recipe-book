@@ -90,3 +90,28 @@ class TestRecipeCreateView(TestCase, Client):
             'method-1-method': 'step 2',
         })
         self.assertRedirects(response, '/')
+
+class TestRecipeDetailsPage(TestCase, Client):
+
+    @classmethod
+    def setUpTestData(cls):
+        user = User.objects.create_user('Name', '', 'password')
+        
+        Recipe.objects.create(
+            title='test1',
+            slug='test1',
+            author = user,
+            cooking_time=1,
+            serves=1,
+            ingredients=[{'ingredients': {'ingredient': 'bread', 'amount': '2 slices'}}],
+            method=[{'method': 'step 1'}],
+            publish_request=True,
+            approval_status=2,
+        )
+        
+    def test_get_recipe_details_page(self):
+        test_recipe_1 = Recipe.objects.get(pk=1)
+
+        response = self.client.get(reverse('recipe_detail', args=(test_recipe_1.slug,)))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'recipe_detail.html')
