@@ -30,12 +30,16 @@ class RecipeDetail(View):
     def get(self, request, slug, *args, **kwargs):
         queryset = Recipe.objects.filter(publish_request=True, approval_status=2)
         recipe = get_object_or_404(queryset, slug=slug)
+        ingredients = json.loads(recipe.ingredients)
+        method = json.loads(recipe.method)
 
         return render(
             request,
             'recipe_detail.html',
             {
                 'recipe': recipe,
+                'ingredients': ingredients,
+                'method': method,
             },
         )
 

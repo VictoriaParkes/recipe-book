@@ -1,7 +1,57 @@
 {% extends "base.html" %}
-
 {% block content %}
+{% load static %}
 
-<h1>{{ recipe.title }}</h1>
+<div class="container-xl">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="container-md">
+                {% if 'placeholder' in recipe.recipe_image.url %}
+                <img class="card-img-top" src="{% static 'images/default.webp' %}" alt="Doodle tray">
+                {% else %}
+                <img class="card-img-top" src=" {{ recipe.recipe_image.url }}" alt="Recipe image provided by author">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="container-md">
+                <h1>{{ recipe.title }}</h1>
+                <p>Shared by {{ recipe.author }}</p>
+                <p><i class="far fa-clock"></i> Time to prepare: {{ recipe.get_cooking_time_display }}</p>
+                <p><i class="fas fa-utensils"></i> Serves: {{ recipe.serves }}</p>
+                <p my-auto>{{ recipe.description }}</p>
+            </div>
+            <div>
+                {% if user == recipe.author %}
+                <button href="#" class="btn btn-primary" type="submit">Edit</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="container-md">
+                <table class="table">
+                    {% for ingredient in ingredients %}
+                    <tr>
+                        {% for key, value in ingredient.ingredients.items %}
+                        <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="container-md">
+                <ol>
+                    {% for step in method %}
+                    <li>{{ step.method }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
 
 {%endblock%}
