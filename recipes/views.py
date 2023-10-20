@@ -1,15 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404, reverse
-from django.http import HttpResponse
+# from django.http import HttpResponse
 from django.views import generic, View
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView  #, UpdateView
-from .models import Recipe
-from .forms import RecipeDetailsForm, IngredientsFormset, MethodFormset
+from .models import Recipe, Saves, Comment
+from .forms import RecipeDetailsForm, IngredientsFormset, MethodFormset, CommentForm
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-# from django.contrib.auth.decorators import login_required
 import json
+from django.http import HttpResponseRedirect
 
 def home(request):
 
@@ -32,6 +32,13 @@ class RecipeDetail(View):
         recipe = get_object_or_404(queryset, slug=slug)
         ingredients = json.loads(recipe.ingredients)
         method = json.loads(recipe.method)
+        comments = recipe.comments.filter(approved=True).order_by('created_on')
+        liked = False
+        if recipe.likes.filter(id=self.request.user.id).exists():
+            liked = True
+        saved = False
+        if Saves.objects.filter(recipe=recipe, user=self.request.user).exists():
+            saved = True
 
         return render(
             request,
@@ -40,8 +47,69 @@ class RecipeDetail(View):
                 'recipe': recipe,
                 'ingredients': ingredients,
                 'method': method,
+                'comments': comments,
+                'commented': False,
+                'liked': liked,
+                'saved': saved,
+                'comment_form': CommentForm()
             },
         )
+
+    def post(self, request, slug, *args, **kwargs):
+        queryset = Recipe.objects.filter(publish_request=True, approval_status=2)
+        recipe = get_object_or_404(queryset, slug=slug)
+        ingredients = json.loads(recipe.ingredients)
+        method = json.loads(recipe.method)
+        comments = recipe.comments.filter(approved=True).order_by('created_on')
+        liked = False
+        if recipe.likes.filter(id=self.request.user.id).exists():
+            liked = True
+        saved = False
+        if Saves.objects.filter(recipe=recipe, user=self.request.user).exists():
+            saved = True
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            comment_form.instance.name = request.user.username
+            comment = comment_form.save(commit=False)
+            comment.recipe = recipe
+            comment.save()
+            messages.success(request, 'Comment Successful!')
+        else:
+            comment_form = CommentForm()
+        
+        return render(
+            request,
+            'recipe_detail.html',
+            {
+                'recipe': recipe,
+                'ingredients': ingredients,
+                'method': method,
+                'comments': comments,
+                'commented': True,
+                'liked': liked,
+                'saved': saved,
+                'comment_form': CommentForm()
+            },
+        )
+
+class RecipeLike(LoginRequiredMixin, View):
+    def post(self, request, slug):
+        recipe = get_object_or_404(Recipe, slug=slug)
+        if recipe.likes.filter(id=self.request.user.id).exists():
+            recipe.likes.remove(request.user)
+        else:
+            recipe.likes.add(request.user)
+        return HttpResponseRedirect(reverse('recipe_detail', args=[slug]))
+
+class RecipeSave(LoginRequiredMixin, View):
+    def post(self, request, slug):
+        recipe_to_save = get_object_or_404(Recipe, slug=slug)
+        if Saves.objects.filter(recipe=recipe_to_save, user=self.request.user).exists():
+            Saves.objects.filter(recipe=recipe_to_save, user=self.request.user).delete()
+        else:
+            saved_recipe = Saves(recipe=recipe_to_save, user=self.request.user)
+            saved_recipe.save()
+        return HttpResponseRedirect(reverse('recipe_detail', args=[slug]))
 
 class CreateRecipe(LoginRequiredMixin, CreateView):
     """

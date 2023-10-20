@@ -10,7 +10,7 @@ from django.forms import (
     formset_factory
 )
 from . import models
-from .models import Recipe
+from .models import Recipe, Comment
 
 class RecipeDetailsForm(ModelForm):
 
@@ -69,9 +69,7 @@ IngredientsFormset = formset_factory(IngredientsForm)
 
 MethodFormset = formset_factory(MethodForm)
 
-# class RecipeAdminForm(ModelForm):
-#     class Meta:
-#         model = Recipe
-#         widgets = {
-#             'ingredients': IngredientsWidget(),
-#         }
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('body',)
