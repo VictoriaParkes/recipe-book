@@ -23,7 +23,11 @@
                 <p my-auto>{{ recipe.description }}</p>
      
                 {% if user == recipe.author %}
-                <button href="#" class="btn btn-primary" type="submit">Edit</button>
+                <!-- <button href="{% url 'recipe_edit' recipe.slug %}"class="btn btn-primary">Edit</button> -->
+                
+                <a href="{% url 'recipe_edit' recipe.slug %}">
+                    <button class="btn btn-primary" value="{{ recipe.slug }}" role="button">Edit</button>
+                </a>
                 {% endif %}
                 {% if user.is_authenticated %}
                 {% if user != recipe.author %}

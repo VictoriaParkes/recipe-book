@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404, reverse
 # from django.http import HttpResponse
 from django.views import generic, View
 from django.views.generic import ListView
-from django.views.generic.edit import CreateView  #, UpdateView
+from django.views.generic.edit import CreateView, UpdateView
 from .models import Recipe, Saves, Comment
 from .forms import RecipeDetailsForm, IngredientsFormset, MethodFormset, CommentForm
 from django.contrib import messages
@@ -113,11 +113,11 @@ class RecipeSave(LoginRequiredMixin, View):
 
 class CreateRecipe(LoginRequiredMixin, CreateView):
     """
-    Recipe Add View
+    Recipe Create View
     """
     model = Recipe
     form_class = RecipeDetailsForm
-    template_name = 'create_recipe.html'
+    template_name = 'create_edit_recipe.html'
     success_url = reverse_lazy('home')
 
     def get_context_data(self, **kwargs):
@@ -125,9 +125,11 @@ class CreateRecipe(LoginRequiredMixin, CreateView):
         if self.request.POST:
             context['ingredients_formset'] = IngredientsFormset(self.request.POST, prefix='ingredients')
             context['method_formset'] = MethodFormset(self.request.POST, prefix='method')
+            context['page_title'] = 'Create Recipe'
         else:
             context['ingredients_formset'] = IngredientsFormset(prefix='ingredients')
             context['method_formset'] = MethodFormset(prefix='method')
+            context['page_title'] = 'Create Recipe'
         return context
 
     def form_valid(self, form):
@@ -149,3 +151,44 @@ class CreateRecipe(LoginRequiredMixin, CreateView):
             else:
                 messages.success(self.request, 'Recipe Successfully Created')
             return super().form_valid(form)
+
+class EditRecipe(LoginRequiredMixin, UpdateView):
+    """
+    Edit Recipe View
+    """
+    model = Recipe
+    form_class = RecipeDetailsForm
+    template_name = 'create_edit_recipe.html'
+    success_url = reverse_lazy('home')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['ingredients_formset'] = IngredientsFormset(self.request.POST, initial=json.loads(self.object.ingredients), prefix='ingredients')
+            context['method_formset'] = MethodFormset(self.request.POST, initial=json.loads(self.object.method), prefix='method')
+            context['page_title'] = 'Edit Recipe'
+        else:
+            context['ingredients_formset'] = IngredientsFormset(initial=json.loads(self.object.ingredients), prefix='ingredients')
+            context['method_formset'] = MethodFormset(initial=json.loads(self.object.method), prefix='method')
+            context['page_title'] = 'Edit Recipe'
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        ingredients_formset = context['ingredients_formset']
+        method_formset = context['method_formset']
+
+        if ingredients_formset.is_valid() and method_formset.is_valid():
+            ingredients_input = ingredients_formset.cleaned_data
+            ingredients_json = json.dumps(ingredients_input)
+            method_input = method_formset.cleaned_data
+            method_json = json.dumps(method_input)
+            form.instance.author = self.request.user
+            form.instance.ingredients = ingredients_json
+            form.instance.method = method_json
+        if form.instance.publish_request:
+            form.instance.approval_status = 1
+            messages.success(self.request, 'Recipe Successfully Created and Awaiting Approval')
+        else:
+            messages.success(self.request, 'Recipe Successfully Created')
+        return super().form_valid(form)
