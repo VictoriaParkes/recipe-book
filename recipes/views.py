@@ -188,7 +188,21 @@ class EditRecipe(LoginRequiredMixin, UpdateView):
             form.instance.method = method_json
         if form.instance.publish_request:
             form.instance.approval_status = 1
-            messages.success(self.request, 'Recipe Successfully Created and Awaiting Approval')
+            messages.success(self.request, 'Recipe Successfully Edited and Awaiting Approval')
         else:
-            messages.success(self.request, 'Recipe Successfully Created')
+            form.instance.approval_status = 0
+            messages.success(self.request, 'Recipe Successfully Edited')
         return super().form_valid(form)
+
+class MyRecipeBook(ListView):
+    model = Saves
+    template_name = 'my_recipe_book.html'
+    def get_queryset(self):
+        qs = super().get_queryset()
+        queryset = qs.filter(user=self.request.user, recipe__publish_request=True, recipe__approval_status=2).order_by('saved_on')
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_recipes_list'] = Recipe.objects.filter(author=self.request.user).order_by('-created_on')
+        return context
