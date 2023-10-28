@@ -203,7 +203,7 @@ class EditRecipe(LoginRequiredMixin, UpdateView):
             messages.success(self.request, 'Recipe Successfully Edited')
         return super().form_valid(form)
 
-class MyRecipeBook(ListView):
+class MyRecipeBook(LoginRequiredMixin, ListView):
     model = Saves
     template_name = 'my_recipe_book.html'
     def get_queryset(self):
