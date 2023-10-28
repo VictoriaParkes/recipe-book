@@ -45,8 +45,9 @@ class RecipeDetail(View):
         if recipe.likes.filter(id=self.request.user.id).exists():
             liked = True
         saved = False
-        if Saves.objects.filter(recipe=recipe, user=self.request.user).exists():
-            saved = True
+        if request.user.is_authenticated:
+            if Saves.objects.filter(recipe=recipe, user=self.request.user).exists():
+                saved = True
 
         return render(
             request,
