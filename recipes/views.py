@@ -26,6 +26,14 @@ class Browse(ListView):
     template_name = 'browse.html'
     paginate_by = 12
 
+class TagBrowse(ListView):
+    model = Recipe
+    template_name = 'browse.html'
+    paginate_by = 12
+
+    def get_queryset(self):
+        return Recipe.objects.filter(tags__slug=self.kwargs.get('tag_slug'))
+
 class RecipeDetail(View):
     def get(self, request, slug, *args, **kwargs):
         queryset = Recipe.objects.filter(publish_request=True, approval_status=2)
