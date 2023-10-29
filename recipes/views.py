@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404, reverse
 # from django.http import HttpResponse
 from django.views import generic, View
 from django.views.generic import ListView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Recipe, Saves, Comment
 from .forms import RecipeDetailsForm, IngredientsFormset, MethodFormset, CommentForm
 from django.contrib import messages
@@ -202,6 +202,11 @@ class EditRecipe(LoginRequiredMixin, UpdateView):
             form.instance.approval_status = 0
             messages.success(self.request, 'Recipe Successfully Edited')
         return super().form_valid(form)
+
+class DeleteRecipe(LoginRequiredMixin, DeleteView):
+    model = Recipe
+    template_name = 'recipe_confirm_delete.html'
+    success_url = reverse_lazy('my_recipe_book')
 
 class MyRecipeBook(LoginRequiredMixin, ListView):
     model = Saves

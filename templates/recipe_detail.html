@@ -21,13 +21,16 @@
                 <p><i class="fas fa-utensils"></i> Serves: {{ recipe.serves }}</p>
                 <p my-auto>{{ recipe.description }}</p>
 
-                {% if user == recipe.author %}
-                <!-- <button href="{% url 'recipe_edit' recipe.slug %}"class="btn btn-primary">Edit</button> -->
-
-                <a href="{% url 'recipe_edit' recipe.slug %}">
-                    <button class="btn btn-primary" value="{{ recipe.slug }}" role="button">Edit</button>
-                </a>
-                {% endif %}
+                <div class="d-flex gap-2">
+                    {% if user == recipe.author %}
+                    <a href="{% url 'recipe_edit' recipe.slug %}">
+                        <button class="btn btn-primary" value="{{ recipe.slug }}" role="button">Edit</button>
+                    </a>
+                    <a href="{% url 'recipe_delete' recipe.slug %}">
+                        <button class="btn btn-primary" value="{{ recipe.id }}" role="button">Delete</button>
+                    </a>
+                    {% endif %}
+                </div>
                 {% if user.is_authenticated %}
                 {% if user != recipe.author %}
                 <form id="like" class="d-inline" action="{% url 'recipe_like' recipe.slug %}" method="POST">
