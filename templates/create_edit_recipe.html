@@ -60,5 +60,14 @@
 
     <input type="submit" value="Submit">
 </form>
+{% if object %}
+<a href="{% url 'recipe_detail' object.slug %}">
+    <button class="btn btn-primary" value="{{ object.slug }}" role="button">Cancel</button>
+</a>
+{% else %}
+<a href="{% url 'browse' %}">
+    <button class="btn btn-primary" role="button">Cancel</button>
+</a>
+{% endif %}
 
 {%endblock%}

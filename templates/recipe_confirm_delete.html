@@ -8,7 +8,7 @@
     <input type="submit" value="Confirm" class="btn btn-primary">
 </form>
 <a href="{% url 'recipe_detail' object.slug %}">
-    <button class="btn btn-primary" value="{{ recipe.slug }}" role="button">Cancel</button>
+    <button class="btn btn-primary" value="{{ object.slug }}" role="button">Cancel</button>
 </a>
 
 {%endblock%}
