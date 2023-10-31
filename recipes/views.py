@@ -83,8 +83,6 @@ class RecipeDetail(View):
             comment.recipe = recipe
             comment.save()
             messages.success(request, 'Comment Successful!')
-        else:
-            comment_form = CommentForm()
         
         return render(
             request,
@@ -97,7 +95,7 @@ class RecipeDetail(View):
                 'commented': True,
                 'liked': liked,
                 'saved': saved,
-                'comment_form': CommentForm()
+                'comment_form': comment_form
             },
         )
 
