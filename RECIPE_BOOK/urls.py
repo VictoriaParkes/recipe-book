@@ -21,3 +21,8 @@ urlpatterns = [
     path('', include('recipes.urls')),
     path('accounts/', include('allauth.urls')),
 ]
+
+handler400 = 'recipes.views.handler400'
+handler403 = 'recipes.views.handler403'
+handler404 = 'recipes.views.handler404'
+handler500 = 'recipes.views.handler500'

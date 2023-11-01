@@ -218,3 +218,27 @@ class MyRecipeBook(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['my_recipes_list'] = Recipe.objects.filter(author=self.request.user).order_by('-created_on')
         return context
+    
+def handler400(request, exception):
+    """
+    Custom 400 page
+    """
+    return render(request, "errors/400.html", status=400)
+
+def handler403(request, exception):
+    """
+    Custom 403 page
+    """
+    return render(request, "errors/403.html", status=403)
+
+def handler404(request, exception):
+    """
+    Custom 404 page
+    """
+    return render(request, "errors/404.html", status=404)
+
+def handler500(request):
+    """
+    Custom 500 page
+    """
+    return render(request, "errors/500.html", status=500)
