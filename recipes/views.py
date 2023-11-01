@@ -6,7 +6,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Recipe, Saves, Comment
 from .forms import RecipeDetailsForm, IngredientsFormset, MethodFormset, CommentForm
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 import json
 from django.http import HttpResponseRedirect
@@ -159,7 +159,12 @@ class CreateRecipe(LoginRequiredMixin, CreateView):
                 messages.success(self.request, 'Recipe Successfully Created')
             return super().form_valid(form)
 
-class EditRecipe(LoginRequiredMixin, UpdateView):
+class RecipeOwnerTest(UserPassesTestMixin):
+    def test_func(self):
+        recipe = self.get_object()
+        return recipe.author == self.request.user
+
+class EditRecipe(LoginRequiredMixin, RecipeOwnerTest, UpdateView):
     """
     Edit Recipe View
     """
@@ -201,7 +206,7 @@ class EditRecipe(LoginRequiredMixin, UpdateView):
             messages.success(self.request, 'Recipe Successfully Edited')
         return super().form_valid(form)
 
-class DeleteRecipe(LoginRequiredMixin, DeleteView):
+class DeleteRecipe(LoginRequiredMixin, RecipeOwnerTest, DeleteView):
     model = Recipe
     template_name = 'recipe_confirm_delete.html'
     success_url = reverse_lazy('my_recipe_book')
