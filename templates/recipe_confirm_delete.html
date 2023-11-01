@@ -1,14 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
 
-<form method="post">
-    {% csrf_token %}
-    <h1>Delete {{ object }}</h1>
-    <p>Are you sure you want to delete your recipe?</p>
-    <input type="submit" value="Confirm" class="btn btn-primary">
-</form>
-<a href="{% url 'recipe_detail' object.slug %}">
-    <button class="btn btn-primary" value="{{ object.slug }}" role="button">Cancel</button>
-</a>
+<section>
+    <div class="text-center mt-3">
+        <form method="post">
+            {% csrf_token %}
+            <h1>Delete {{ object }}</h1>
+            <p>Are you sure you want to delete your recipe?</p>
+            <input type="submit" value="Confirm" class="delete-confirm btn btn-success">
+        </form>
+        <a href="{% url 'recipe_detail' object.slug %}">
+            <button class="delete-cancel btn btn-secondary mt-3" value="{{ object.slug }}" role="button">Cancel</button>
+        </a>
+    </div>
+</section>
 
 {%endblock%}

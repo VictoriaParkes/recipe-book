@@ -6,7 +6,7 @@
 <section id="recipe">
     <div class="container-xl mt-3 px-5">
         <div class="row">
-            <div class="col-md-6 text-center">
+            <div class="col-md-7 text-center">
                 {% if 'placeholder' in recipe.recipe_image.url %}
                 <img class="img-fluid img-thumbnail" src="{% static 'images/default.webp' %}" alt="Doodle tray">
                 {% else %}
@@ -14,13 +14,13 @@
                     alt="Recipe image provided by author">
                 {% endif %}
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div>
                     <h1>{{ recipe.title }}</h1>
                     <p>Shared by {{ recipe.author }}</p>
                 </div>
                 <div>
-                    <p><i class="far fa-heart" title="Likes"></i> {{ recipe.number_of_likes }}</p>
+                    <p><i class="fas fa-heart" title="Likes"></i> {{ recipe.number_of_likes }}</p>
                     <p><i class="far fa-clock"></i> Time to prepare: {{ recipe.get_cooking_time_display }}</p>
                     <p><i class="fas fa-utensils"></i> Serves: {{ recipe.serves }}</p>
                 </div>
@@ -28,10 +28,10 @@
                     <div class="d-flex gap-2">
                         {% if user == recipe.author %}
                         <a href="{% url 'recipe_edit' recipe.slug %}">
-                            <button class="btn btn-primary" value="{{ recipe.slug }}" role="button">Edit</button>
+                            <button class="btn btn-secondary" value="{{ recipe.slug }}" role="button">Edit</button>
                         </a>
                         <a href="{% url 'recipe_delete' recipe.slug %}">
-                            <button class="btn btn-primary" value="{{ recipe.id }}" role="button">Delete</button>
+                            <button class="btn btn-secondary" value="{{ recipe.id }}" role="button">Delete</button>
                         </a>
                         {% endif %}
                     </div>
@@ -40,21 +40,21 @@
                     <form id="like" class="d-inline" action="{% url 'recipe_like' recipe.slug %}" method="POST">
                         {% csrf_token %}
                         {% if liked %}
-                        <button class="btn btn-primary" type="submit" name="like_button" value="{{ recipe.slug }}"><i
-                                class="fas fa-heart"></i> Unlike Recipe</button>
+                        <button class="btn btn-secondary" type="submit" name="like_button" value="{{ recipe.slug }}"><i
+                                class="fas fa-heart"></i> Liked</button>
                         {% else %}
-                        <button class="btn btn-primary" type="submit" name="like_button" value="{{ recipe.slug }}"><i
-                                class="far fa-heart"></i> Like Recipe</button>
+                        <button class="btn btn-secondary" type="submit" name="like_button" value="{{ recipe.slug }}"><i
+                                class="far fa-heart"></i> Like</button>
                         {% endif %}
                     </form>
                     <form id="save" class="d-inline" action="{% url 'recipe_save' recipe.slug %}" method="POST">
                         {% csrf_token %}
                         {% if saved %}
-                        <button class="btn btn-primary" type="submit" name="save_button" value="{{ recipe.slug }}"><i
-                                class="fas fa-bookmark"></i> Unsave Recipe</button>
+                        <button class="btn btn-secondary" type="submit" name="save_button" value="{{ recipe.slug }}"><i
+                                class="fas fa-bookmark"></i> Saved</button>
                         {% else %}
-                        <button class="btn btn-primary" type="submit" name="save_button" value="{{ recipe.slug }}"><i
-                                class="far fa-bookmark"></i> Save Recipe</button>
+                        <button class="btn btn-secondary" type="submit" name="save_button" value="{{ recipe.slug }}"><i
+                                class="far fa-bookmark"></i> Save</button>
                         {% endif %}
                     </form>
                     {% endif %}
@@ -94,7 +94,7 @@
         <div class="d-flex flex-wrap gap-2">
             {% for tag in recipe.tags.all %}
             <a href="{% url 'recipes_by_tag' tag.slug %}">
-                <button type="button" class="btn btn-outline-primary" value="{{ tag.slug }}"
+                <button type="button" class="btn btn-outline-secondary" value="{{ tag.slug }}"
                     role="button">{{tag.name}}</button>
             </a>
             {% endfor %}
@@ -121,7 +121,7 @@
             <form method="post">
                 {{ comment_form | crispy }}
                 {% csrf_token %}
-                <button type="submit" class="btn btn-primary mt-1">Submit</button>
+                <button type="submit" class="btn btn-secondary mt-1">Submit</button>
             </form>
             {% endif %}
             {% endif %}

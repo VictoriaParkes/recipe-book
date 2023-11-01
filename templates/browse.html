@@ -21,12 +21,12 @@
                                     {% endif %}
                                     <div class="card-img-overlay">
                                         <div class="card-likes">
-                                            <i class="far fa-heart" title="Likes"></i> {{ recipe.number_of_likes }}
+                                            <i class="fas fa-heart" title="Likes"></i> {{ recipe.number_of_likes }}
                                         </div>
                                     </div>
                                 </div>
-                                <h2 class="card-title">{{ recipe.title }}</h2>
-                                <hr />
+                                <h2 class="card-title mt-2">{{ recipe.title }}</h2>
+                                <hr/>
                                 <p class="author">Shared by {{ recipe.author }}</p>
                                 <p><i class="far fa-clock"></i> Time to prepare: {{ recipe.get_cooking_time_display }}</p>
                                 <p><i class="fas fa-utensils"></i> Serves: {{ recipe.serves }}</p>
