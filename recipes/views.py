@@ -26,10 +26,20 @@ class Browse(ListView):
     template_name = 'browse.html'
     paginate_by = 12
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Browse Recipes'
+        return context
+
 class TagBrowse(ListView):
     model = Recipe
     template_name = 'browse.html'
     paginate_by = 12
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Browse Recipes'
+        return context
 
     def get_queryset(self):
         return Recipe.objects.filter(tags__slug=self.kwargs.get('tag_slug'))
@@ -38,6 +48,7 @@ class RecipeDetail(View):
     def get(self, request, slug, *args, **kwargs):
         queryset = Recipe.objects.filter(publish_request=True, approval_status=2)
         recipe = get_object_or_404(queryset, slug=slug)
+        page_title = recipe.title
         ingredients = json.loads(recipe.ingredients)
         method = json.loads(recipe.method)
         comments = recipe.comments.filter(approved=True).order_by('created_on')
@@ -60,13 +71,15 @@ class RecipeDetail(View):
                 'commented': False,
                 'liked': liked,
                 'saved': saved,
-                'comment_form': CommentForm()
+                'comment_form': CommentForm(),
+                'page_title': page_title
             },
         )
 
     def post(self, request, slug, *args, **kwargs):
         queryset = Recipe.objects.filter(publish_request=True, approval_status=2)
         recipe = get_object_or_404(queryset, slug=slug)
+        page_title = recipe.title
         ingredients = json.loads(recipe.ingredients)
         method = json.loads(recipe.method)
         comments = recipe.comments.filter(approved=True).order_by('created_on')
@@ -95,7 +108,8 @@ class RecipeDetail(View):
                 'commented': True,
                 'liked': liked,
                 'saved': saved,
-                'comment_form': comment_form
+                'comment_form': comment_form,
+                'page_title': page_title
             },
         )
 
@@ -222,6 +236,7 @@ class MyRecipeBook(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['my_recipes_list'] = Recipe.objects.filter(author=self.request.user).order_by('-created_on')
+        context['page_title'] = 'My Recipe Book'
         return context
     
 def handler400(request, exception):
