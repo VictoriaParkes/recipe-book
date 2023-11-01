@@ -21,3 +21,8 @@
 #div_id_publish_request .form-text {
     display: block;
 }
+
+/* Recipe detail */
+.comment-container {
+    max-height: 500px;
+}
