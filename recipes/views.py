@@ -225,6 +225,11 @@ class DeleteRecipe(LoginRequiredMixin, RecipeOwnerTest, DeleteView):
     template_name = 'recipe_confirm_delete.html'
     success_url = reverse_lazy('my_recipe_book')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Delete Recipe'
+        return context
+
 class MyRecipeBook(LoginRequiredMixin, ListView):
     model = Saves
     template_name = 'my_recipe_book.html'
