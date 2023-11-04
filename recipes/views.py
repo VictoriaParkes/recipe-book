@@ -46,7 +46,7 @@ class TagBrowse(ListView):
 
 class RecipeDetail(View):
     def get(self, request, slug, *args, **kwargs):
-        queryset = Recipe.objects.filter(publish_request=True, approval_status=2)
+        queryset = Recipe.objects.all()
         recipe = get_object_or_404(queryset, slug=slug)
         page_title = recipe.title
         ingredients = json.loads(recipe.ingredients)
