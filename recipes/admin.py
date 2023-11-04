@@ -6,6 +6,9 @@ from .models import Recipe, Comment, Saves
 class RecipeAdmin(admin.ModelAdmin):
     list_filter = ['approval_status']
     list_display = ('title', 'publish_request', 'approval_status', 'created_on')
+    actions = ['approve_recipe']
+    def approve_recipe(self, request, queryset):
+        queryset.update(approval_status='2')
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
