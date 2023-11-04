@@ -20,7 +20,7 @@
                     <p>Shared by {{ recipe.author }}</p>
                 </div>
                 <div>
-                    <p><i class="fas fa-heart" title="Likes"></i> {{ recipe.number_of_likes }}</p>
+                    <p><i class="fas fa-heart" title="Likes"></i> <span id="total-likes">{{ recipe.number_of_likes }}</span></p>
                     <p><i class="far fa-clock"></i> Time to prepare: {{ recipe.get_cooking_time_display }}</p>
                     <p><i class="fas fa-utensils"></i> Serves: {{ recipe.serves }}</p>
                 </div>
@@ -40,21 +40,21 @@
                     <form id="like" class="d-inline" action="{% url 'recipe_like' recipe.slug %}" method="POST">
                         {% csrf_token %}
                         {% if liked %}
-                        <button class="btn btn-secondary" type="submit" name="like_button" value="{{ recipe.slug }}"><i
-                                class="fas fa-heart"></i> Liked</button>
+                        <button class="btn btn-secondary" type="submit" id="like-button" name="like-button" value="{{ recipe.slug }}"><i
+                                id="like-icon" class="fas fa-heart"></i><span id="like-button-text"> Liked</span></button>
                         {% else %}
-                        <button class="btn btn-secondary" type="submit" name="like_button" value="{{ recipe.slug }}"><i
-                                class="far fa-heart"></i> Like</button>
+                        <button class="btn btn-secondary" type="submit" id="like-button" name="like_button" value="{{ recipe.slug }}"><i
+                                id="like-icon" class="far fa-heart"></i><span id="like-button-text"> Like</span></button>
                         {% endif %}
                     </form>
                     <form id="save" class="d-inline" action="{% url 'recipe_save' recipe.slug %}" method="POST">
                         {% csrf_token %}
                         {% if saved %}
-                        <button class="btn btn-secondary" type="submit" name="save_button" value="{{ recipe.slug }}"><i
-                                class="fas fa-bookmark"></i> Saved</button>
+                        <button class="btn btn-secondary" type="submit" id="save-button" name="save-button" value="{{ recipe.slug }}"><i
+                                id="save-icon" class="fas fa-bookmark"></i><span id="save-button-text"> Saved</span></button>
                         {% else %}
-                        <button class="btn btn-secondary" type="submit" name="save_button" value="{{ recipe.slug }}"><i
-                                class="far fa-bookmark"></i> Save</button>
+                        <button class="btn btn-secondary" type="submit" id="save-button" name="save-button" value="{{ recipe.slug }}"><i
+                                id="save-icon" class="far fa-bookmark"></i><span id="save-button-text"> Save</span></button>
                         {% endif %}
                     </form>
                     {% endif %}
