@@ -37,6 +37,11 @@ a {
     color: #5F5F5F;
 }
 
+/* Hero */
+#hero {
+    background-color: rgba(249, 245, 227, 0.25);
+}
+
 /* Browse */
 .card-likes {
     float: right;
