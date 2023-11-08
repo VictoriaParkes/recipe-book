@@ -1,24 +1,25 @@
 from django.shortcuts import render, redirect, get_object_or_404, reverse
-# from django.http import HttpResponse
 from django.views import generic, View
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Recipe, Saves, Comment
+from django.db.models import Count
 from .forms import RecipeDetailsForm, IngredientsFormset, MethodFormset, CommentForm
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
-import json
 from django.http import HttpResponseRedirect
+import json
 
-def home(request):
+class Index(ListView):
+    model = Recipe
+    queryset = Recipe.objects.filter(publish_request=True, approval_status=2).annotate(num_likes=Count("likes")).order_by("-num_likes")[:3]
+    template_name = 'index.html'
 
-    template = 'index.html'
-    context = {
-        'page_title': 'Home'
-    }
-
-    return render(request, template, context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Home'
+        return context
 
 class Browse(ListView):
     model = Recipe

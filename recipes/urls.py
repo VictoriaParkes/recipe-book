@@ -1,10 +1,9 @@
 from . import views
 from django.urls import path
-from .views import home
 
 
 urlpatterns = [
-    path('', home, name='home'),
+    path('', views.Index.as_view(), name='home'),
     path('create_recipe', views.CreateRecipe.as_view(), name='create_recipe'),
     path('browse', views.Browse.as_view(), name='browse'),
     path('tags/<slug:tag_slug>', views.TagBrowse.as_view(), name='recipes_by_tag'),

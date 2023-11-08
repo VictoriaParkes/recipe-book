@@ -30,4 +30,39 @@
     </div>
 </section>
 
+<section id="most-liked">
+    <div class="row">
+        {% for recipe in recipe_list %}
+        <div class="col-md-4">
+            <div class="card">
+                <a href="{% url 'recipe_detail' recipe.slug %}">
+                    <div class="card-body">
+                        <div class="image-container">
+                            {% if 'placeholder' in recipe.recipe_image.url %}
+                            <img class="card-img-top" src="{% static 'images/default.webp' %}" alt="Doodle tray">
+                            {% else %}
+                            <img class="card-img-top" src=" {{ recipe.recipe_image.url }}"
+                                alt="Recipe image provided by author">
+                            {% endif %}
+                            <div class="card-img-overlay">
+                                <div class="card-likes">
+                                    <i class="fas fa-heart" title="Likes"></i> {{ recipe.number_of_likes }}
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="card-title">{{ recipe.title }}</h2>
+                        <hr />
+                        <p class="author">Shared by {{ recipe.author }}</p>
+                        <p>
+                            <i class="far fa-clock"></i> Time to prepare: {{ recipe.get_cooking_time_display }}
+                        </p>
+                        <p><i class="fas fa-utensils"></i> Serves: {{ recipe.serves }}</p>
+                        <p class="card-text text-muted h6">{{ recipe.created_on }}</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+</section>
+
 {%endblock%}
