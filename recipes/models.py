@@ -22,14 +22,14 @@ COOKING_TIME = (
 
 # recipe model
 class Recipe(models.Model):
-    title = models.CharField(max_length=200, help_text= 'Required, max length 200 characters.')
+    title = models.CharField(max_length=50, help_text= 'Required, max length 50 characters.')
     slug = AutoSlugField(populate_from='title', unique=True)
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='recipes'
     )
     recipe_image = CloudinaryField('image', default='placeholder')
     tags = TaggableManager(blank=True)
-    description = models.TextField(blank=True, help_text= 'Optional.')
+    description = models.TextField(max_length=300, blank=True, help_text= 'Optional, max length 300 characters.')
     cooking_time = models.CharField(max_length=50, choices=COOKING_TIME, help_text= 'Select how long your recipe takes to prepare.')
     serves = models.IntegerField(help_text= 'Enter how many people your recipes serves.')
     ingredients = models.JSONField(null=False)
@@ -77,7 +77,7 @@ class Saves(models.Model):
     saved_on = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['saved_on']
+        ordering = ['-saved_on']
     
     def __str__(self):
         return f'Recipe saved by {self.user}'
