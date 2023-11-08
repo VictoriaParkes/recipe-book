@@ -1,3 +1,7 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
 h1, h2, h3, p, hr {
     color: #5F5F5F;
 }
@@ -28,7 +32,7 @@ a {
 
 .navbar-brand {
     color: #5F5F5F;
-    font-family: 'Reenie Beanie', sans-serif;
+    font-family: 'Reenie Beanie', cursive;
     font-size: 2.5em;
     text-shadow: 1.4px 1.4px #fff, 2px 0 #fff, 1.4px -1.4px #fff, 0 -2px #fff, -1.4px -1.4px #fff, -2px 0 #FFF, -1.4px 1.4px #fff, 0 2px #fff;
 }
