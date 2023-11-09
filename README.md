@@ -46,7 +46,7 @@ The Project link: (<https://github.com/users/VictoriaParkes/projects/2>)
 
 ### Structure
 
-The Recipe Book app is designed with a simple structure to ensure the app is easy to use and navigate. Each page has a consistent layout to allow users to easily find the information they need. The app has a responsive design to ensure it can be clearly viewed on a wide range of devices. The navigation menu is available on all pages of the app to provide users with a consistent method to navigate the site.
+The Recipe Book app is designed with a simple structure to ensure the app is easy to use and navigate. Each page has a consistent layout to allow users to easily find the information they need. The app has a responsive design to ensure it can be clearly viewed on a wide range of devices. The navigation menu is available on all pages of the app to provide users with a consistent method to navigate the site. Bootstrap rows and columns have been used to provide a clean and uniform structure to the content of each page.
 
 ### Wireframes
 
@@ -79,3 +79,57 @@ The images and logo were chosen to reflect the content site, and provide a simpl
 Icons were used as visual indicators for social media links, recipe likes, recipe saves, recipe preparation time and recipe servings.
 
 All icons were sourced from [Font Awesome](https://fontawesome.com/).
+
+## Features
+
+### Navigation Menu
+
+The navigation menu is featured on all pages to provide a consistent means of navigating the site. The menu provides links to 'Home' page, 'Browse' page, 'My Recipe Book' page, 'Create Recipe' page, a login link when the user is unauthenticated and a logout link when the user is authenticated. It is fully responsive, collapsing into a navbar toggle button which presents the navigation menu as a dropdown menu. A navbar brand and image features on the left of the navbar, providing an additional link to the 'Home' page.
+
+### 'Home' Page
+
+The 'Home' page features a hero section with a decorative image and a call to action which encourages unauthenticated users to sign up to the website or encourages authenticated users to browse recipes on the site. This page also features a section displaying the top three most liked recipes in a responsive column format as card that are links to the full recipe details.
+
+### 'Browse' Page
+
+The 'Home' page features a hero section with a decorative image and a call to action which encourages unauthenticated users to sign up to the website or encourages authenticated users to browse recipes on the site. This page also features a section displaying the top three most liked recipes in a responsive column format as card that are links to the full recipe details.
+
+### 'My Recipe Book' Page
+
+The 'My Recipe Book' page features two tabs to display either the recipes saved by the user or the recipes written by the user. Recipes are displayed as cards in in a responsive column format consistent with the 'Browse' page. If there are no recipes to display, a message informing the user that they have no saved/written any recipes yet is displayed. This page can only be accessed by authenticated users, unauthenticated users are redirected to the login page.
+
+### Recipe Details Page
+
+A recipe is displayed in full when the user clicks on a recipe card. The recipe image, title, author, number of likes, preparation time and number of servings are displayed in two columns on larger screens and one column on smaller screens. When viewed by authenticated user who is the author of the recipe, functionalities to edit and delete the recipe are available. An edit button will direct the user to create/edit recipe page which is populated with the current recipe details, where they can edit their recipe or cancel and return to the full recipe details page. A delete button will direct the user to a page asking the user to confirm they wish to delete the recipe, the recipe will be deleted from the database if the user confirms deletion or return to recipe details page if the users cancels deletion. When the recipe is viewed by an authenticated user who is not the author, functionalities to like and save the recipe are available. When the user likes the recipe the database is updated, along with the total number of likes on the page and the like button to confirm the action. When the recipe is saved the database is updated along with the save button to confirm the action.
+
+If a recipe description was written by the recipe author it will be displayed.
+
+The ingredients and method sections are displayed in two columns on larger screens and one column on smaller screens. The ingredients are displayed in a table format with a column for ingredient name and a column for ingredient amount, and the method is displayed as a numbered list.
+
+Below the ingredients and method any tags entered by the author are displayed which are a link to the browse page where other recipes that contain the same tag are displayed. This feature allows users to more easily find similar recipes.
+
+The commenting feature is also featured on the full recipe details page. Authenticated user are presented with a text input which can be used to submit a comment. Comments must be approved by admin before they will be displayed on the site. Upon submitting a comment a message is displayed inform the user that their comment has be successfully submitted and is awaiting approval. Approved comments for a recipe are displayed on the full recipe details page to all user of the site along with a total count of comments for the recipe.
+
+### Create/Edit Recipe Page
+
+A form in which authenticated user enter recipe details. The form consists of the following fields:
+
+- a text input field for recipe title
+- a text area for recipe description
+- a choicefield for cooking time
+- an integer field for number of servings
+- a file upload field for an image, a default image is used if user does not upload an image
+- a text input field for tags
+- a multiwidget comprised of two text input fields for ingredient name and amount
+- a text area for method steps
+- a check box input for publication request
+
+Django formsets are used for ingredient and method inputs giving the user the ability to add additional form inputs to add as many individual ingredients and method steps as needed.
+
+The form features a submit button to submit a recipe and a cancel button to return to the 'browse' page without submitting the form.
+
+### User Authentication
+
+### Admin
+
+### Future features
