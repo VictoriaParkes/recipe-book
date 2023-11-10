@@ -277,6 +277,10 @@ The app uses the Cloudinary cloud service to store static files such as images, 
 
 For more details about forking and cloning a repository, please refer to [GitHub documentation](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
 
+#### Install Dependencies
+
+Use the `pip install -r requirements.txt` command to install all of the Python modules and packages listed in your requirements.txt file.
+
 #### Create your env.py
 
 - In your project workspace, create a file called env.py and make sure this file is included in the .gitignore file.
