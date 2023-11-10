@@ -124,12 +124,220 @@ A form in which authenticated user enter recipe details. The form consists of th
 - a text area for method steps
 - a check box input for publication request
 
-Django formsets are used for ingredient and method inputs giving the user the ability to add additional form inputs to add as many individual ingredients and method steps as needed.
+Django formsets and a jquery plugin called django-dynamic-formset are used for ingredient and method inputs giving the user the ability to add additional form inputs to add as many individual ingredients and method steps as needed.
 
 The form features a submit button to submit a recipe and a cancel button to return to the 'browse' page without submitting the form.
 
 ### User Authentication
 
-### Admin
+The app uses the Django Allauth package to handle user authentication and enable authenticated users to utilise the CRUD functionalities. The package provides a set of views and templates to handle user registration, login and logout. Defensive programming has been used throughout the site to prevent users accessing pages when they don't have the relevant permissions. To access the admin panel the user requires 'superuser' or 'staff status' permission status. Django's LoginRequired mixin is used to limit access to anonymous users and redirect them to the login page when they try to view content for which they require an account to access. Content is protected from unauthorised changes with the use of user_passes_test decorator, for example recipes can only be edited by the author of the recipe. This decorator causes unauthorised users to be redirected to a 403 error page informing the user they are not permitted to perform the action.
+
+### Admin Panel
+
+Django's admin panel can be accessed by 'superusers' and users with the permission of 'staff status'. The admin panel is used to manage site content by setting the approval status of recipes and comments. A list of all tags entered can also be viewed form the admin panel and can be deleted , edited and added to if needed. Each data model is registered with the admin using the register decorator so they are easily accessed and managed.
+
+### Data Models
+
+The Recipe Book app uses a relational database to store and manage data. The relational database management system software used for this project is [PostgreSQL](https://www.postgresql.org/) which is hosted on the cloud service [ElephantSQL](https://www.elephantsql.com/).
+
+#### Recipe Model
+
+Title - a CharField with a maximum of 50 characters and a help text reading 'Required, max length 50 characters.' which is displayed under the form input field.
+
+Slug - an autopopulated field that uses django-autoslug, a django library that provides an improved slug field which can automatically populate itself from another field, preserve uniqueness of the value and use custom slugify() functions for better i18n.
+
+Author - a ForeignKey linking the recipe to the user model of the user who created it.
+
+Recipe_image - a CloudinaryField which contains the URL to the image that is stored on the Cloudinary server.
+
+Tags - the tags field uses a django application called django-taggit which provides a tag model and taggeditem model. It uses the class TaggableManager() to manage the relationships between the recipe and the associated tags.
+
+Description - a TextField with a maximum of 300 characters and a help text reading 'Optional, max length 300 characters.' which is displayed under the form input field. This field is not required.
+
+Cooking_time - a CharField with a maximum of 50 charaters and a help text reading 'Select how long your recipe takes to prepare.' which is displayed under the form input field. The input is selected from the choices dropdown.
+
+Serves - an IntegerField with a help text reading 'Enter how many people your recipes serves.' which is displayed under the form input field.
+
+Ingredients - a JSONField. The ingredient input values are converted into a JSON string when the form is submitted.
+
+Method - a JSONField. The method input values are converted into a JSON string when the form is submitted.
+
+Created_on - a DateTimeField that autopopulates with the current date and time when a recipe is created.
+
+Updated_on - a DateTimeField that autopopulates and updates with the current date and time when a recipe is updates.
+
+Publish_request - a BooleanField which which is set to True when the user checks the 'Make Public' check box, defaults to false when box is left unchecked. A help text reading 'Check this box to submit your recipe for online publication.' is displayed under the form input.
+
+Approval_status - a CharField with a maximum of 50 characters. Defaults to 'Unpublished' if the user does not check the 'Make Public' check box or defaults to 'Pending Approval' when the user oes check the 'Make Public' check box. The field is updated by admin to approve or reject the recipe.
+
+Likes - a ManyToManyField linking user models to recipes that user has liked.
+
+#### Comment Model
+
+The comment model was taken from Code Institute's 'Codestar Blog'.
+
+Recipe - a ForeignKey linking the comment to the recipe it is associated with.
+
+Name - a CharField with a maximum of 150 characters. This field is populated with the user's username.
+
+Body - a TextField to store the comment submitted.
+
+Created_on - a DateTimeField that autopopulates with the current date and time when a comment is submitted.
+
+Approved - a BooleanField that defaults to false and is updated to true by admin when the comment is approved.
+
+#### Saves Model
+
+Recipe - a ForeignKey referencing the recipe that has been saved.
+
+User - a ForeignKey referencing the user that has saved the recipe.
+
+Saved_on - a DateTimeField that autopopulates with the current date and time when the recipe was saved.
+
+#### Entity Relationship Diagram
+
+The Entity Relationship Diagram below shows the structure of the database and the relationships between the tables.
+
+![Entity Relationship Diagram](docs/erd.png)
+
+### Static File Storage
+
+The app uses the Cloudinary cloud service to store static files such as images, CSS, and JavaScript files. To store the recipe images uploaded by user when creating a recipe, the Cloudinary field uses the Cloudinary API to upload the images to the Cloudinary server and store the image URL in the database.
 
 ### Future features
+
+- Fuctionality to give each recipe a star rating.
+- Search functionality to search for recipes by keyword.
+
+## Technologies Used
+
+### Languages
+
+- [HTML5](https://en.wikipedia.org/wiki/HTML5)
+- [CSS3](https://en.wikipedia.org/wiki/CSS)
+- [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
+- [Python](https://en.wikipedia.org/wiki/Python_(programming_language))
+
+### Frameworks, Libraries and Packages
+
+- [Django 3.2](https://docs.djangoproject.com/en/3.2/)
+- [Bootstrap 5](https://getbootstrap.com/)
+- [jQuery 3.7.1](https://releases.jquery.com/)
+- [Font Awesome 5.15.4](https://fontawesome.com/)
+- [Google Fonts](https://fonts.google.com/)
+- [django-crispy-forms](https://django-crispy-forms.readthedocs.io/en/latest/)
+- [cripsy-bootstrap5](https://github.com/django-crispy-forms/crispy-bootstrap5)
+- [django-allauth](https://django-allauth.readthedocs.io/en/latest/)
+- [django-dynamic-formset](https://github.com/elo80ka/django-dynamic-formset)
+- [django-autoslug](https://django-autoslug.readthedocs.io/en/stable/)
+- [django-taggit](https://django-taggit.readthedocs.io/en/stable/)
+- [coverage](https://coverage.readthedocs.io/en/7.2.7/)
+
+### Tools
+
+- [Git](https://git-scm.com/)
+- [GitHub](https://github.com/)
+- [CodeAnywhere](https://app.codeanywhere.com/)
+- [Heroku](https://heroku.com/)
+- [Cloudinary](https://cloudinary.com/)
+- [Balsamiq](https://balsamiq.com/)
+- [Lucidchart](https://www.lucidchart.com/pages)
+- [Coolors](https://coolors.co/)
+- [CloudConvert](https://cloudconvert.com/)
+- [Tiny PNG](https://tinypng.com/)
+- [Am I Responsive](https://ui.dev/amiresponsive)
+- [favicon.io](https://favicon.io/)
+
+## Local Development and Deployment
+
+### Local Development
+
+#### Forking the Repository
+
+- Log in to GitHub.
+- Go to the repository for this project (<https://github.com/VictoriaParkes/recipe-book>).
+- In the top-right corner of the page, click "Fork".
+- Under "Owner", select an owner for the repository from the dropdown menu.
+- Optionally, in the "Description" field, type a description of your fork.
+- To copy the main branch only, select the "Copy the main branch only" check box. If you do not select this option, all branches will be copied into the new fork.
+- Click "Create fork"
+
+#### Cloning Your Forked Repository
+
+- Log-in to GitHub.com, navigate to your fork of the repository.
+- Above the list of files, click Code.
+- Copy the URL for the repository.
+  - To clone the repository using HTTPS, under "Clone with HTTPS", click the "Copy" icon.
+  - To clone the repository using an SSH key, including a certificate issued by your organization's SSH certificate authority, click SSH, then click the "Copy" icon.
+  - To clone a repository using GitHub CLI, click Use GitHub CLI, then click the "Copy" icon.
+- Open Git Bash
+- Change the current working directory to the location where you want the cloned directory.
+- Type git clone, and then paste the URL you copied earlier.
+- Press Enter. Your local clone will be created.
+
+For more details about forking and cloning a repository, please refer to [GitHub documentation](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
+
+#### Create your env.py
+
+- In your project workspace, create a file called env.py and make sure this file is included in the .gitignore file.
+- Add the following code:
+
+```python
+import os
+
+os.environ["DATABASE_URL"]='<copiedURL>'
+os.environ['SECRET_KEY'] = '<ADD YOUR SECRET KEY HERE>'
+os.environ['CLOUDINARY_URL'] = '<API ENVIRONEMENT VARIABLE>'
+
+```
+
+- Replace `<ADD YOUR SECRET KEY HERE>` in the SECRET_KEY environment variable with your own secret key.
+- Save the file.
+
+#### Create a Database
+
+- Create an account and log in with ElephantSQL.com.
+- From the dashboard click “Create New Instance”.
+- Set up your plan
+  - Give your plan a Name
+  - Select a plan tier
+  - You can leave the Tags field blank
+- Select “Select Region”
+- Select a data center near you
+- Then click “Review”
+- Check your details are correct and then click “Create instance”
+- Return to the ElephantSQL dashboard and click on the database instance name for this project
+- In the URL section, click the copy icon to copy the database URL
+- In your env.py file replace `<copiedURL>` in the DATABASE_URL environment variable with the copied URL.
+- Save the file.
+
+#### Set Up Cloudinary
+
+- Create an account and log in with Cloudinary.com.
+- In the dashboard copy your API Environment variable.
+- In your env.py file replace `<API ENVIRONEMENT VARIABLE>` in the CLOUDINARY_URL environment variable with the copied API Environment variable.
+- Save the file.
+
+### Deployment
+
+- The requirements.txt file in the project was updated to include details on the project dependencies. Steps to do this are :
+  - Enter the following command at the terminal prompt : "pip3 freeze > requirements.txt"
+  - Commit changes to requirements.txt and push to GitHub.
+- Log in to Heroku, create an account if necessary.
+- From the Heroku dashboard, click "Create new app". For a new account a button will be displayed on screen, if you already have one or more apps created a link to this function is located in the "New" dropdown menu at the top right of the screen.
+- On the Create New App page, enter a unique name for the application and select region. Then click Create app.
+- Select the "settings" tab and click the "Reveal Config Vars" button.
+- Enter the following values into the specified fields and click "Add":
+
+    | KEY | VALUE |
+    |-----|-------|
+    | CLOUDINARY_URL | paste your API Environment variable copied from the Cloudinary dashboard |
+    | DATABASE_URL | paste the URL copied from ElephantSQL dashboard |
+    | SECRET_KEY | paste your secret key |
+
+- Select the "Deploy" tab.
+- Select GitHub as the Deployment Method and click "Connect to GitHub".
+- Enter the name of your GitHub repository in the search bar and click "Search".
+- Click the "Connect" button to link your GitHub repository with your Heroku app.
+- Scroll down the page and choose to either Automatically Deploy each time changes are pushed to GitHub, or Manually deploy.
+- The application can be run from the Application Configuration page by clicking on the Open App button.
