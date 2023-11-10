@@ -71,7 +71,7 @@ class TestRecipeCreateView(TestCase, Client):
         self.client.force_login(user=user)
         response = self.client.get('/create_recipe')
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'create_recipe.html')
+        self.assertTemplateUsed(response, 'create_edit_recipe.html')
 
     def test_create_recipe(self):
         user = User.objects.create_user('Name', '', 'password')
@@ -103,8 +103,8 @@ class TestRecipeDetailsPage(TestCase, Client):
             author = user,
             cooking_time=1,
             serves=1,
-            ingredients=[{'ingredients': {'ingredient': 'bread', 'amount': '2 slices'}}],
-            method=[{'method': 'step 1'}],
+            ingredients="[{\"ingredients\": {\"ingredient\": \"test ingredient\", \"amount\": \"2 slices\"}}]",
+            method="[{\"method\": \"step 1\"}]",
             publish_request=True,
             approval_status=2,
         )
