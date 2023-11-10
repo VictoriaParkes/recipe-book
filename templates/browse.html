@@ -17,7 +17,7 @@
                                         alt="Doodle tray">
                                     {% else %}
                                     <img class="card-img-top" src=" {{ recipe.recipe_image.url }}"
-                                        alt="Recipe image provided by author">
+                                        alt="{{ recipe.author }}'s {{ recipe.title }}">
                                     {% endif %}
                                     <div class="card-img-overlay">
                                         <div class="card-likes">
