@@ -23,6 +23,11 @@ a {
     color: #D3EADE;
 }
 
+.recipe-image {
+    object-fit: cover;
+    aspect-ratio: 1;
+}
+
 /* Navigation menu */
 .navbar {
     background-color: #D3EADE;

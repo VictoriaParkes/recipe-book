@@ -26,9 +26,9 @@
                         <div class="card-body">
                             <div class="image-container">
                                 {% if 'placeholder' in recipe.recipe.recipe_image.url %}
-                                <img class="card-img-top" src="{% static 'images/default.webp' %}" alt="Doodle tray">
+                                <img class="card-img-top recipe-image" src="{% static 'images/default.webp' %}" alt="Doodle tray">
                                 {% else %}
-                                <img class="card-img-top" src="{{ recipe.recipe.recipe_image.url }}"
+                                <img class="card-img-top recipe-image" src="{{ recipe.recipe.recipe_image.url }}"
                                     alt="{{ recipe.recipe.author }}'s {{ recipe.recipe.title }}">
                                 {% endif %}
                                 <div class="card-img-overlay">
@@ -65,9 +65,9 @@
                         <div class="card-body">
                             <div class="image-container">
                                 {% if 'placeholder' in recipe.recipe_image.url %}
-                                <img class="card-img-top" src="{% static 'images/default.webp' %}" alt="Doodle tray">
+                                <img class="card-img-top recipe-image" src="{% static 'images/default.webp' %}" alt="Doodle tray">
                                 {% else %}
-                                <img class="card-img-top" src="{{ recipe.recipe_image.url }}"
+                                <img class="card-img-top recipe-image" src="{{ recipe.recipe_image.url }}"
                                     alt="{{ recipe.author }}'s {{ recipe.title }}">
                                 {% endif %}
                                 <div class="card-img-overlay">
