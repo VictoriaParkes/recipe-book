@@ -16,7 +16,7 @@
             </div>
             <div class="col-md-5">
                 <div>
-                    <h1>{{ recipe.title }}</h1>
+                    <h1 class="text-capitalize">{{ recipe.title }}</h1>
                     <p>Shared by {{ recipe.author }}</p>
                 </div>
                 <div>
@@ -72,7 +72,7 @@
                     {% for ingredient in ingredients %}
                     <tr>
                         {% for key, value in ingredient.ingredients.items %}
-                        <td>{{ value }}</td>
+                        <td class="text-capitalize">{{ value }}</td>
                         {% endfor %}
                     </tr>
                     {% endfor %}
@@ -82,7 +82,7 @@
                 <h2>Method</h2>
                 <ol>
                     {% for step in method %}
-                    <li>{{ step.method }}</li>
+                    <li class="p-2">{{ step.method }}</li>
                     {% endfor %}
                 </ol>
             </div>
