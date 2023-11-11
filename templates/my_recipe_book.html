@@ -28,11 +28,11 @@
                                 {% if 'placeholder' in recipe.recipe.recipe_image.url %}
                                 <img class="card-img-top" src="{% static 'images/default.webp' %}" alt="Doodle tray">
                                 {% else %}
-                                <img class="card-img-top" src=" {{ recipe.recipe.recipe_image.url }}"
+                                <img class="card-img-top" src="{{ recipe.recipe.recipe_image.url }}"
                                     alt="{{ recipe.recipe.author }}'s {{ recipe.recipe.title }}">
                                 {% endif %}
                                 <div class="card-img-overlay">
-                                    <div class="card-likes">
+                                    <div class="card-likes border border-white border-2">
                                         <i class="fas fa-heart" title="Likes"></i> {{ recipe.recipe.number_of_likes }}
                                     </div>
                                 </div>
@@ -67,11 +67,11 @@
                                 {% if 'placeholder' in recipe.recipe_image.url %}
                                 <img class="card-img-top" src="{% static 'images/default.webp' %}" alt="Doodle tray">
                                 {% else %}
-                                <img class="card-img-top" src=" {{ recipe.recipe_image.url }}"
+                                <img class="card-img-top" src="{{ recipe.recipe_image.url }}"
                                     alt="{{ recipe.author }}'s {{ recipe.title }}">
                                 {% endif %}
                                 <div class="card-img-overlay">
-                                    <div class="card-likes">
+                                    <div class="card-likes border border-white border-2">
                                         <i class="fas fa-heart" title="Likes"></i> {{ recipe.number_of_likes }}
                                     </div>
                                 </div>
