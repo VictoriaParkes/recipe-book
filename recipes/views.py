@@ -45,6 +45,32 @@ class TagBrowse(ListView):
     def get_queryset(self):
         return Recipe.objects.filter(tags__slug=self.kwargs.get('tag_slug'))
 
+class SavedRecipes(ListView):
+    model = Recipe
+    template_name = 'browse.html'
+    paginate_by = 12
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Saved Recipes'
+        return context
+    
+    def get_queryset(self):
+        return Recipe.objects.filter(saves__user=self.request.user, publish_request=True, approval_status=2).order_by('-saves__saved_on')
+
+class MyRecipes(ListView):
+    model = Recipe
+    template_name = 'browse.html'
+    paginate_by = 12
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'My Recipes'
+        return context
+
+    def get_queryset(self):
+        return Recipe.objects.filter(author=self.request.user).order_by('-created_on')
+
 class RecipeDetail(View):
     def get(self, request, slug, *args, **kwargs):
         queryset = Recipe.objects.all()
@@ -231,19 +257,21 @@ class DeleteRecipe(LoginRequiredMixin, RecipeOwnerTest, DeleteView):
         context['page_title'] = 'Delete Recipe'
         return context
 
-class MyRecipeBook(LoginRequiredMixin, ListView):
-    model = Saves
-    template_name = 'my_recipe_book.html'
-    def get_queryset(self):
-        qs = super().get_queryset()
-        queryset = qs.filter(user=self.request.user, recipe__publish_request=True, recipe__approval_status=2).order_by('saved_on')
-        return queryset
+# class MyRecipeBook(LoginRequiredMixin, ListView):
+#     model = Saves
+#     template_name = 'my_recipe_book.html'
+#     paginate_by = 12
     
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['my_recipes_list'] = Recipe.objects.filter(author=self.request.user).order_by('-created_on')
-        context['page_title'] = 'My Recipe Book'
-        return context
+#     def get_queryset(self):
+#         qs = super().get_queryset()
+#         queryset = qs.filter(user=self.request.user, recipe__publish_request=True, recipe__approval_status=2)
+#         return queryset
+    
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['my_recipes_list'] = Recipe.objects.filter(author=self.request.user).order_by('-created_on')
+#         context['page_title'] = 'My Recipe Book'
+#         return context
     
 def handler400(request, exception):
     """

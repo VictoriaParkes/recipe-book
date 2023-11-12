@@ -41,18 +41,28 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'home' %}">Home</a>
                     </li>
-
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'browse' %}">Browse</a>
                     </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'my_recipe_book' %}">My Recipe Book</a>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            My Recipe Book
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'saved_recipes' %}">Saved Recipes</a></li>
+                            <li><a class="dropdown-item" href="{% url 'my_recipes' %}">My Recipes</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'create_recipe' %}">Create Recipe</a></li>
+                        </ul>
                     </li>
-
-                    <li class="nav-item">
+                    
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="{% url 'create_recipe' %}">Create Recipe</a>
-                    </li>
+                    </li> -->
 
                     {% if user.is_authenticated %}
                     <li class="nav-item">
