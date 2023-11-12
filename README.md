@@ -345,3 +345,15 @@ os.environ['CLOUDINARY_URL'] = '<API ENVIRONEMENT VARIABLE>'
 - Click the "Connect" button to link your GitHub repository with your Heroku app.
 - Scroll down the page and choose to either Automatically Deploy each time changes are pushed to GitHub, or Manually deploy.
 - The application can be run from the Application Configuration page by clicking on the Open App button.
+
+## Testing
+
+[Chrome DevTools](https://developer.chrome.com/docs/devtools/) was frequently utilised in the development of the website to manipulate and test features as they were added to the project, to test responsiveness and for debugging purposes.
+
+### Manual Functionality Testing
+
+[See Functionality Testing Document](docs/testing/functionality-testing.md)
+
+### Browser Compatibility
+
+The website was tested for functionality on different browsers (Chrome, Firefox and Edge) and found to be fully functional on them all.
