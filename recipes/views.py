@@ -166,7 +166,7 @@ class CreateRecipe(LoginRequiredMixin, CreateView):
     model = Recipe
     form_class = RecipeDetailsForm
     template_name = 'create_edit_recipe.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('my_recipes')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -212,7 +212,7 @@ class EditRecipe(LoginRequiredMixin, RecipeOwnerTest, UpdateView):
     model = Recipe
     form_class = RecipeDetailsForm
     template_name = 'create_edit_recipe.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('my_recipes')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -250,28 +250,12 @@ class EditRecipe(LoginRequiredMixin, RecipeOwnerTest, UpdateView):
 class DeleteRecipe(LoginRequiredMixin, RecipeOwnerTest, DeleteView):
     model = Recipe
     template_name = 'recipe_confirm_delete.html'
-    success_url = reverse_lazy('my_recipe_book')
+    success_url = reverse_lazy('my_recipes')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['page_title'] = 'Delete Recipe'
         return context
-
-# class MyRecipeBook(LoginRequiredMixin, ListView):
-#     model = Saves
-#     template_name = 'my_recipe_book.html'
-#     paginate_by = 12
-    
-#     def get_queryset(self):
-#         qs = super().get_queryset()
-#         queryset = qs.filter(user=self.request.user, recipe__publish_request=True, recipe__approval_status=2)
-#         return queryset
-    
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['my_recipes_list'] = Recipe.objects.filter(author=self.request.user).order_by('-created_on')
-#         context['page_title'] = 'My Recipe Book'
-#         return context
     
 def handler400(request, exception):
     """
