@@ -61,7 +61,7 @@ class TagBrowse(ListView):
         '''
         return Recipe.objects.filter(tags__slug=self.kwargs.get('tag_slug'))
 
-class SavedRecipes(ListView):
+class SavedRecipes(LoginRequiredMixin, ListView):
     '''
     Display currently published recipes that the user has saved.
     '''
@@ -80,7 +80,7 @@ class SavedRecipes(ListView):
         '''
         return Recipe.objects.filter(saves__user=self.request.user, publish_request=True, approval_status=2).order_by('-saves__saved_on')
 
-class MyRecipes(ListView):
+class MyRecipes(LoginRequiredMixin, ListView):
     '''
     Display recipes that the user has written.
     '''
