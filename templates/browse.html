@@ -4,37 +4,13 @@
 
 <div class="container-fluid">
     <h1>{{ page_title }}</h1>
+    <!-- Recipe cards for list views -->
     <div class="row">
         <div class="col-12 left">
             <div class="row g-3">
                 {% for recipe in recipe_list %}
                 <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="card h-100">
-                        <a href="{% url 'recipe_detail' recipe.slug %}">
-                            <div class="card-body">
-                                <div class="image-container">
-                                    {% if 'placeholder' in recipe.recipe_image.url %}
-                                    <img class="card-img-top recipe-image" src="{% static 'images/default.webp' %}"
-                                        alt="Doodle tray">
-                                    {% else %}
-                                    <img class="card-img-top recipe-image" src=" {{ recipe.recipe_image.url }}"
-                                        alt="{{ recipe.author }}'s {{ recipe.title }}">
-                                    {% endif %}
-                                    <div class="card-img-overlay">
-                                        <div class="card-likes border border-white border-2">
-                                            <i class="fas fa-heart" title="Likes"></i> {{ recipe.number_of_likes }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <h2 class="card-title mt-2 text-capitalize">{{ recipe.title }}</h2>
-                                <hr/>
-                                <p class="author">Shared by {{ recipe.author }}</p>
-                                <p><i class="far fa-clock"></i> Time to prepare: {{ recipe.get_cooking_time_display }}</p>
-                                <p><i class="fas fa-utensils"></i> Serves: {{ recipe.serves }}</p>
-                                <p class="card-text text-muted h6">{{ recipe.created_on }}</p>
-                            </div>
-                        </a>
-                    </div>
+                    {% include 'recipe-card.html' %}
                 </div>
                 {% empty %}
                 <div class="text-center">

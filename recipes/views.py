@@ -12,16 +12,26 @@ from django.http import HttpResponseRedirect
 import json
 
 class Index(ListView):
+    '''
+    Return top three most liked recipes that are currently public on the site.
+    '''
     model = Recipe
     queryset = Recipe.objects.filter(publish_request=True, approval_status=2).annotate(num_likes=Count("likes")).order_by("-num_likes")[:3]
     template_name = 'index.html'
 
     def get_context_data(self, **kwargs):
+        '''
+        Add extra context of page title.
+        '''
         context = super().get_context_data(**kwargs)
         context['page_title'] = 'Home'
         return context
 
 class Browse(ListView):
+    '''
+    Return all recipes that have been submitted for publication and approved by admin, in reverse order of date created.
+    Display 12 recipes per page.
+    '''
     model = Recipe
     queryset = Recipe.objects.filter(publish_request=True, approval_status=2).order_by('-created_on')
     template_name = 'browse.html'
@@ -33,6 +43,9 @@ class Browse(ListView):
         return context
 
 class TagBrowse(ListView):
+    '''
+    Display a list of recipes with a certain tag.
+    '''
     model = Recipe
     template_name = 'browse.html'
     paginate_by = 12
@@ -43,9 +56,15 @@ class TagBrowse(ListView):
         return context
 
     def get_queryset(self):
+        '''
+        Return currently published recipes with the tag matching the button value that the user clicked.
+        '''
         return Recipe.objects.filter(tags__slug=self.kwargs.get('tag_slug'))
 
 class SavedRecipes(ListView):
+    '''
+    Display currently published recipes that the user has saved.
+    '''
     model = Recipe
     template_name = 'browse.html'
     paginate_by = 12
@@ -56,9 +75,15 @@ class SavedRecipes(ListView):
         return context
     
     def get_queryset(self):
+        '''
+        Return currently published recipes that have been saved by the user, in reverse order of saved date.
+        '''
         return Recipe.objects.filter(saves__user=self.request.user, publish_request=True, approval_status=2).order_by('-saves__saved_on')
 
 class MyRecipes(ListView):
+    '''
+    Display recipes that the user has written.
+    '''
     model = Recipe
     template_name = 'browse.html'
     paginate_by = 12
@@ -69,21 +94,34 @@ class MyRecipes(ListView):
         return context
 
     def get_queryset(self):
+        '''
+        Return all recipes that user has written, in reverse order of created date.
+        '''
         return Recipe.objects.filter(author=self.request.user).order_by('-created_on')
 
 class RecipeDetail(View):
     def get(self, request, slug, *args, **kwargs):
+        # return all recipe objects
         queryset = Recipe.objects.all()
+        # get the recipe with the correct slug
         recipe = get_object_or_404(queryset, slug=slug)
+        # define the page title
         page_title = recipe.title
+        # convert json string into python
         ingredients = json.loads(recipe.ingredients)
         method = json.loads(recipe.method)
+        # get approved comments in order of created date
         comments = recipe.comments.filter(approved=True).order_by('created_on')
+        # set liked to false by default
         liked = False
+        # if current user has liked the recipe, set liked to true
         if recipe.likes.filter(id=self.request.user.id).exists():
             liked = True
+        # set saved to false by default
         saved = False
+        # if user is authenticated, check if user has saved the recipe
         if request.user.is_authenticated:
+            # if user has saved the recipe, set saved to true
             if Saves.objects.filter(recipe=recipe, user=self.request.user).exists():
                 saved = True
 
@@ -141,6 +179,9 @@ class RecipeDetail(View):
         )
 
 class RecipeLike(LoginRequiredMixin, View):
+    '''
+    Allow authenticated user to like/unlike recipes.
+    '''
     def post(self, request, slug):
         recipe = get_object_or_404(Recipe, slug=slug)
         if recipe.likes.filter(id=self.request.user.id).exists():
@@ -150,6 +191,9 @@ class RecipeLike(LoginRequiredMixin, View):
         return HttpResponseRedirect(reverse('recipe_detail', args=[slug]))
 
 class RecipeSave(LoginRequiredMixin, View):
+    '''
+    Allow authenticated user to save/unsave recipes.
+    '''
     def post(self, request, slug):
         recipe_to_save = get_object_or_404(Recipe, slug=slug)
         if Saves.objects.filter(recipe=recipe_to_save, user=self.request.user).exists():
@@ -161,7 +205,7 @@ class RecipeSave(LoginRequiredMixin, View):
 
 class CreateRecipe(LoginRequiredMixin, CreateView):
     """
-    Recipe Create View
+    Allow authenticated user to access create recipe form to submit recipes.
     """
     model = Recipe
     form_class = RecipeDetailsForm
@@ -169,6 +213,9 @@ class CreateRecipe(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('my_recipes')
 
     def get_context_data(self, **kwargs):
+        '''
+        Add ingredients formset, method formset and page title to context.
+        '''
         context = super().get_context_data(**kwargs)
         if self.request.POST:
             context['ingredients_formset'] = IngredientsFormset(self.request.POST, prefix='ingredients')
@@ -181,33 +228,48 @@ class CreateRecipe(LoginRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
+        '''
+        Validate submitted form.
+        '''
         context = self.get_context_data()
         ingredients_formset = context['ingredients_formset']
         method_formset = context['method_formset']
 
         if ingredients_formset.is_valid() and method_formset.is_valid():
+            # get cleaned data from ingredients formset
             ingredients_input = ingredients_formset.cleaned_data
+            # convert ingredients input data into json string
             ingredients_json = json.dumps(ingredients_input)
             method_input = method_formset.cleaned_data
             method_json = json.dumps(method_input)
+            # set author as current user
             form.instance.author = self.request.user
+            # set ingredients as ingredients json string
             form.instance.ingredients = ingredients_json
             form.instance.method = method_json
+            # if publish request check box is checked
             if form.instance.publish_request:
+                # set approval status to 'pending approval'
                 form.instance.approval_status = 1
                 messages.success(self.request, 'Recipe Successfully Created and Awaiting Approval')
             else:
+                # approval status will be set to 'unpublished' by default
                 messages.success(self.request, 'Recipe Successfully Created')
             return super().form_valid(form)
 
 class RecipeOwnerTest(UserPassesTestMixin):
+    '''
+    If the user matches the recipe author they will have permission to perform action.
+    If the user does not match the recipe author the user will be redirected to 403 error page.
+    '''
     def test_func(self):
         recipe = self.get_object()
         return recipe.author == self.request.user
 
 class EditRecipe(LoginRequiredMixin, RecipeOwnerTest, UpdateView):
     """
-    Edit Recipe View
+    Allow authenticated user that passes RecipeOwnerTest to edit recipes.
+    Display create recipe form populated with values from the recipe being edited.
     """
     model = Recipe
     form_class = RecipeDetailsForm
@@ -248,6 +310,9 @@ class EditRecipe(LoginRequiredMixin, RecipeOwnerTest, UpdateView):
         return super().form_valid(form)
 
 class DeleteRecipe(LoginRequiredMixin, RecipeOwnerTest, DeleteView):
+    '''
+    Allow authenticated user that passes RecipeOwnerTest to delete recipes.
+    '''
     model = Recipe
     template_name = 'recipe_confirm_delete.html'
     success_url = reverse_lazy('my_recipes')

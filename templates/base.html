@@ -25,6 +25,7 @@
     <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
 </head>
 <body class="d-flex flex-column min-vh-100">
+    <!-- Navigation Menu -->
     <nav class="navbar navbar-expand-md">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'home' %}">
@@ -59,10 +60,6 @@
                             <li><a class="dropdown-item" href="{% url 'create_recipe' %}">Create Recipe</a></li>
                         </ul>
                     </li>
-                    
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="{% url 'create_recipe' %}">Create Recipe</a>
-                    </li> -->
 
                     {% if user.is_authenticated %}
                     <li class="nav-item">

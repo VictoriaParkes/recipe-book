@@ -51,7 +51,7 @@ class Recipe(models.Model):
     def number_of_likes(self):
         return self.likes.count()
 
-# comment model.
+# comment model
 class Comment(models.Model):
     recipe = models.ForeignKey(
         Recipe, on_delete=models.CASCADE, related_name='comments'

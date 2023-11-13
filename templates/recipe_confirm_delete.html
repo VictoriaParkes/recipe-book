@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 
-<section>
+<!-- Confirm delete form -->
+<section id="confirm-delete">
     <div class="text-center">
         <form method="post">
             {% csrf_token %}
