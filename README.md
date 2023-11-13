@@ -92,11 +92,15 @@ The 'Home' page features a hero section with a decorative image and a call to ac
 
 ### 'Browse' Page
 
-The 'Home' page features a hero section with a decorative image and a call to action which encourages unauthenticated users to sign up to the website or encourages authenticated users to browse recipes on the site. This page also features a section displaying the top three most liked recipes in a responsive column format as card that are links to the full recipe details.
+The 'Browse' page features a paginated list of all currently published recipes displayed as cards. Clicking anywhere on a recipe card will display the full recipe details. This page is displayed in a fully responsive column format. If there are no published recipes available for display, text reading 'There are no recipes yet' is displayed.
 
-### 'My Recipe Book' Page
+### 'Saved Recipes' Page
 
-The 'My Recipe Book' page features two tabs to display either the recipes saved by the user or the recipes written by the user. Recipes are displayed as cards in in a responsive column format consistent with the 'Browse' page. If there are no recipes to display, a message informing the user that they have no saved/written any recipes yet is displayed. This page can only be accessed by authenticated users, unauthenticated users are redirected to the login page.
+The 'Saved Recipes' page can be accessed by authenticated users only and displays a paginated list of all currently published recipes that the user has saved as cards. Clicking anywhere on a recipe card will display the full recipe details. This page is displayed in a fully responsive column format. If the user has no saved recipes, text reading 'You have not saved any recipes yet' is displayed. This page reuses the 'Browse' template. Unauthenticated users are redirected to the login page.
+
+### 'My Recipes' Page
+
+The 'My Recipes' page can be accessed by authenticated users only and displays a paginated list of all recipes written by the user as cards. Clicking anywhere on a recipe card will display the full recipe details. This page is displayed in a fully responsive column format. If the user has not written any recipes, text reading 'You have not written any recipes yet' is displayed. This page reuses the 'Browse' template. Unauthenticated users are redirected to the login page.
 
 ### Recipe Details Page
 
@@ -126,7 +130,7 @@ A form in which authenticated user enter recipe details. The form consists of th
 
 Django formsets and a jquery plugin called django-dynamic-formset are used for ingredient and method inputs giving the user the ability to add additional form inputs to add as many individual ingredients and method steps as needed.
 
-The form features a submit button to submit a recipe and a cancel button to return to the 'browse' page without submitting the form.
+The form features a submit button to submit a recipe and a cancel button to return to the 'browse' page without submitting the form. Upon successful form submission the user is returned to the 'My Recipes' page.
 
 ### User Authentication
 
