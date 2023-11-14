@@ -22,7 +22,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
 ]
 
-handler400 = 'recipes.views.handler400'
-handler403 = 'recipes.views.handler403'
-handler404 = 'recipes.views.handler404'
-handler500 = 'recipes.views.handler500'
+handler400 = 'RECIPE_BOOK.views.handler400'
+handler403 = 'RECIPE_BOOK.views.handler403'
+handler404 = 'RECIPE_BOOK.views.handler404'
+handler500 = 'RECIPE_BOOK.views.handler500'
