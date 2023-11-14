@@ -226,7 +226,7 @@ class CreateRecipe(LoginRequiredMixin, CreateView):
             context['method_formset'] = MethodFormset(prefix='method')
             context['page_title'] = 'Create Recipe'
         return context
-
+    
     def form_valid(self, form):
         '''
         Validate submitted form.
@@ -249,13 +249,23 @@ class CreateRecipe(LoginRequiredMixin, CreateView):
             form.instance.method = method_json
             # if publish request check box is checked
             if form.instance.publish_request:
-                # set approval status to 'pending approval'
-                form.instance.approval_status = 1
-                messages.success(self.request, 'Recipe Successfully Created and Awaiting Approval')
+                # if recipe does not include ingredients or method, save but don't submit for publication
+                if form.instance.ingredients == "[]" or form.instance.method == "[]":
+                    # display message informing user recipe requires ingredients and method for publication
+                    messages.warning(self.request, 'Recipe saved but requires ingredients and method for publication')
+                else:
+                    # set approval status to 'pending approval'
+                    form.instance.approval_status = 1
+                    messages.success(self.request, 'Recipe successfully created and awaiting approval')
             else:
                 # approval status will be set to 'unpublished' by default
-                messages.success(self.request, 'Recipe Successfully Created')
+                messages.success(self.request, 'Recipe saved in your recipes')
             return super().form_valid(form)
+        # else:
+        #     # if formset not valid display error alert and load new form
+        #     if not ingredients_formset.is_valid() or not method_formset.is_valid():
+        #         messages.error(self.request, self.error_message)
+        #         return HttpResponseRedirect(self.request.path_info)
 
 class RecipeOwnerTest(UserPassesTestMixin):
     '''
@@ -301,13 +311,19 @@ class EditRecipe(LoginRequiredMixin, RecipeOwnerTest, UpdateView):
             form.instance.author = self.request.user
             form.instance.ingredients = ingredients_json
             form.instance.method = method_json
-        if form.instance.publish_request:
-            form.instance.approval_status = 1
-            messages.success(self.request, 'Recipe Successfully Edited and Awaiting Approval')
-        else:
-            form.instance.approval_status = 0
-            messages.success(self.request, 'Recipe Successfully Edited')
-        return super().form_valid(form)
+            if form.instance.publish_request:
+                # if recipe does not include ingredients or method, save but don't submit for publication
+                if form.instance.ingredients == "[]" or form.instance.method == "[]":
+                    form.instance.approval_status = 0
+                    # display message informing user recipe requires ingredients and method for publication
+                    messages.warning(self.request, 'Recipe saved but requires ingredients and method for publication')
+                else:
+                    # set approval status to 'pending approval'
+                    form.instance.approval_status = 1
+                    messages.success(self.request, 'Recipe successfully created and awaiting approval')
+            else:
+                messages.success(self.request, 'Recipe successfully edited')
+            return super().form_valid(form)
 
 class DeleteRecipe(LoginRequiredMixin, RecipeOwnerTest, DeleteView):
     '''
