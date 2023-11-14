@@ -361,3 +361,10 @@ os.environ['CLOUDINARY_URL'] = '<API ENVIRONEMENT VARIABLE>'
 ### Browser Compatibility
 
 The website was tested for functionality on different browsers (Chrome, Firefox and Edge) and found to be fully functional on them all.
+
+### Bugs Encountered
+
+1. When viewing recipe details as anonymous user, TypeError received ('AnonymousUser' object not iterable). Added 'if' statement to view to check if user is authenticated before querying the 'Saves' database for matching user.
+2. User images were not being submitted, added class 'enctype="multipart/form-data"' to form to allow files to be uploaded.
+3. Refactored my recipe book pages to make paginating and redirecting to 'my recipes' after creating, editing and deleting recipes easier.
+4. Removing all ingredients or method formset from recipe form submitted empty list for model instance, added clause to save recipe but not submit for publication if ingredients or method not entered.
