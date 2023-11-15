@@ -10,9 +10,7 @@
             <p>Are you sure you want to delete your recipe?</p>
             <input type="submit" value="Confirm" class="delete-confirm btn btn-success">
         </form>
-        <a href="{% url 'recipe_detail' object.slug %}">
-            <button class="delete-cancel btn btn-secondary mt-3" value="{{ object.slug }}" role="button">Cancel</button>
-        </a>
+        <a class="delete-cancel btn btn-secondary mt-3" href="{% url 'recipe_detail' object.slug %}" role="button">Cancel</a>
     </div>
 </section>
 

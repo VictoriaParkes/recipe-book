@@ -70,13 +70,9 @@
         </form>
         <div class="text-center mt-3">
             {% if object %}
-            <a href="{% url 'recipe_detail' object.slug %}">
-                <button class="recipe-cancel btn btn-secondary" value="{{ object.slug }}" role="button">Cancel</button>
-            </a>
+            <a class="recipe-cancel btn btn-secondary" href="{% url 'recipe_detail' object.slug %}" role="button">Cancel</a>
             {% else %}
-            <a href="{% url 'browse' %}">
-                <button class="recipe-cancel btn btn-secondary" role="button">Cancel</button>
-            </a>
+            <a class="recipe-cancel btn btn-secondary" href="{% url 'browse' %}" role="button">Cancel</a>
             {% endif %}
         </div>
     </div>
