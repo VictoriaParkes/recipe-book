@@ -251,6 +251,7 @@ class CreateRecipe(LoginRequiredMixin, CreateView):
             if form.instance.publish_request:
                 # if recipe does not include ingredients or method, save but don't submit for publication
                 if form.instance.ingredients == "[]" or form.instance.method == "[]":
+                    form.instance.publish_request = False
                     # display message informing user recipe requires ingredients and method for publication
                     messages.warning(self.request, 'Recipe saved but requires ingredients and method for publication')
                 else:
@@ -309,6 +310,7 @@ class EditRecipe(LoginRequiredMixin, RecipeOwnerTest, UpdateView):
             if form.instance.publish_request:
                 # if recipe does not include ingredients or method, save but don't submit for publication
                 if form.instance.ingredients == "[]" or form.instance.method == "[]":
+                    form.instance.publish_request = False
                     form.instance.approval_status = 0
                     # display message informing user recipe requires ingredients and method for publication
                     messages.warning(self.request, 'Recipe saved but requires ingredients and method for publication')
@@ -317,6 +319,7 @@ class EditRecipe(LoginRequiredMixin, RecipeOwnerTest, UpdateView):
                     form.instance.approval_status = 1
                     messages.success(self.request, 'Recipe successfully created and awaiting approval')
             else:
+                form.instance.approval_status = 0
                 messages.success(self.request, 'Recipe successfully edited')
             return super().form_valid(form)
 

@@ -3,7 +3,6 @@ let alert = new bootstrap.Alert(messages);
 
 /*
 Wait for DOM to finish loading before adding event listeners 
-and displaying the welcome modal
 */
 $(document).ready(function () {
     $('#like').submit(toggleLike);

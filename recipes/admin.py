@@ -10,7 +10,9 @@ class RecipeAdmin(admin.ModelAdmin):
     # list of fields to generate filters in the right sidebar of admin panel
     list_filter = ['approval_status']
     # The fields to be displayed in the list of recipes in admin panel
-    list_display = ('title', 'publish_request', 'approval_status', 'created_on')
+    list_display = ('title', 'publish_request', 'approval_status', 'created_on', 'author')
+    # search name or body of comments
+    search_fields = ['title', 'description']
     # Add approve recipes action
     actions = ['approve_recipe']
     # Define approve recipes action
@@ -24,7 +26,6 @@ class CommentAdmin(admin.ModelAdmin):
     '''
     list_display = ('body', 'recipe', 'created_on', 'approved')
     list_filter = ('approved', 'recipe', 'created_on')
-    # search name or body of comments
     search_fields = ['name', 'body']
     actions = ['approve_comments']
     def approve_comments(self, request, queryset):
