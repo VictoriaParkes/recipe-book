@@ -2,7 +2,18 @@
 
 Recipe Book is an online app designed to build a community of 'foodies' and home cooks who share recipes and join in conversations. All users have access to browse and view published recipes but users must be registered to interact with content, join conversations and submit their own recipes. Registered users can easily submit their recipes to the site via a recipe submission form and can return to edit their recipes or delete them from the site. Each recipe is displayed on the site for other users to access after the author has requested publishing and it has been accepted by admin. Recipes can also be saved to the 'My Recipe Book' section where registered users can access saved recipes more easily and also access recipes they have written.
 
-## User Experience (UX)
+## Contents
+
+1. [User Experience (UX)](#1-user-experience-ux)
+2. [Agile Development](#2-agile-development)
+3. [Design](#3-design)
+4. [Features](#4-features)
+5. [Technologies Used](#5-technologies-used)
+6. [Local Development and Deployment](#6-local-development-and-deployment)
+7. [Testing](#7-testing)
+8. [Credits](#8-credits)
+
+## 1. User Experience (UX)
 
 ### User Stories
 
@@ -25,7 +36,7 @@ Recipe Book is an online app designed to build a community of 'foodies' and home
 
 - As a Site Admin I can approve or reject submitted user recipes so that I can manage the content of the site.
 
-## Agile Development
+## 2. Agile Development
 
 This project was developed using Agile methodology which allowed me to iteratively and incrementally build my app, with flexibility to make changes to my design throughout the entire development process.
 
@@ -40,9 +51,9 @@ User stories were prioritised using the MoSCoW prioritisation technique. Each us
 
 GitHub milestones were also used to group related user stories together.
 
-The Project link: (<https://github.com/users/VictoriaParkes/projects/2>)
+[The Project Kanban Board](https://github.com/users/VictoriaParkes/projects/2)
 
-## Design
+## 3. Design
 
 ### Structure
 
@@ -80,7 +91,7 @@ Icons were used as visual indicators for social media links, recipe likes, recip
 
 All icons were sourced from [Font Awesome](https://fontawesome.com/).
 
-## Features
+## 4. Features
 
 ### Navigation Menu
 
@@ -213,7 +224,7 @@ The app uses the Cloudinary cloud service to store static files such as images, 
 - Fuctionality to give each recipe a star rating.
 - Search functionality to search for recipes by keyword.
 
-## Technologies Used
+## 5. Technologies Used
 
 ### Languages
 
@@ -252,7 +263,7 @@ The app uses the Cloudinary cloud service to store static files such as images, 
 - [Am I Responsive](https://ui.dev/amiresponsive)
 - [favicon.io](https://favicon.io/)
 
-## Local Development and Deployment
+## 6. Local Development and Deployment
 
 ### Local Development
 
@@ -350,7 +361,7 @@ os.environ['CLOUDINARY_URL'] = '<API ENVIRONEMENT VARIABLE>'
 - Scroll down the page and choose to either Automatically Deploy each time changes are pushed to GitHub, or Manually deploy.
 - The application can be run from the Application Configuration page by clicking on the Open App button.
 
-## Testing
+## 7. Testing
 
 [Chrome DevTools](https://developer.chrome.com/docs/devtools/) was frequently utilised in the development of the website to manipulate and test features as they were added to the project, to test responsiveness and for debugging purposes.
 
@@ -368,3 +379,34 @@ The website was tested for functionality on different browsers (Chrome, Firefox 
 2. User images were not being submitted, added class 'enctype="multipart/form-data"' to form to allow files to be uploaded.
 3. Refactored my recipe book pages to make paginating and redirecting to 'my recipes' after creating, editing and deleting recipes easier.
 4. Removing all ingredients or method formset from recipe form submitted empty list for model instance, added clause to save recipe but not submit for publication if ingredients or method not entered.
+
+## 8. Credits
+
+### Code
+
+[Django Docs](https://docs.djangoproject.com/en/3.2/), [W3Schools](https://www.w3schools.com/) and [Bootstrap Docs](https://getbootstrap.com/docs/5.3/getting-started/introduction/) were frequently referred to in the development of this website:
+
+- Code from Code Institute's CodeStar blog walkthrough project was used and modified to create the commenting feature.
+- Forms were styled using [django-crispy-forms docs](https://django-crispy-forms.readthedocs.io/en/1.14.0/index.html)
+- The multiwidget and multivalue fields in the recipe form were created using [Python – Django: MultiValueField and MultiWidget](https://itecnote.com/tecnote/python-django-multivaluefield-and-multiwidget/) and [Handling multiple input values for single Django form field](https://coderwall.com/p/kq1d5a/handling-multiple-input-values-for-single-django-form-field)
+- The dynamic functionality of the formsets in to recipe form were created using [Adding forms dynamically to a Django formset](https://medium.com/all-about-django/adding-forms-dynamically-to-a-django-formset-375f1090c2b0) and [django-dynamic-formset](https://github.com/elo80ka/django-dynamic-formset)
+- Extra context and querysets were added to views using [When to use get, get_queryset, get_context_data in Django?](https://medium.com/@hassanraza/when-to-use-get-get-queryset-get-context-data-in-django-952df6be036a)
+- Automated tests to assert queryset equality were created using [Testing Equality of Django QuerySets: A Guide](https://copyprogramming.com/howto/how-do-i-test-django-querysets-are-equal)
+- The custom error pages were created using advice from my mentor Brian Macharia
+- The user images failing to upload bug was fixed using [W3Schools](https://www.w3schools.com/tags/att_form_enctype.asp)
+
+### Content
+
+The recipes featured on the app were sourced from [BBC Good Food](https://www.bbcgoodfood.com/).
+
+### Media
+
+The images featured on the app were sourced from [rawpixel](https://www.rawpixel.com/):
+
+- [Logo](https://www.rawpixel.com/image/2393591/free-illustration-png-chef-cook-hat-cooking)
+- [Hero Image](https://www.rawpixel.com/image/2395669/free-illustration-png-accessory-apron-bakery)
+- [Default Recipe Image](https://www.rawpixel.com/image/2393629/free-illustration-vector-hand-drawn-plate-dome-cap)
+
+### Acknowledgements
+
+I would like to thank Brian Macharia, my Code Institute mentor, for his helpful feedback and advice.
