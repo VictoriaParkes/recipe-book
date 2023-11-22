@@ -62,7 +62,7 @@
         </div>
         <!-- Recipe description -->
         <div class="row mt-3">
-            <p my-auto>{{ recipe.description }}</p>
+            <p>{{ recipe.description }}</p>
         </div>
         <!-- Ingredients and Method -->
         <div class="row mt-3">
@@ -128,7 +128,7 @@
         <div class="comment-container overflow-auto">
             {% for comment in comments %}
             <div class="comments">
-                <p class="fw-bold">
+                <p class="fw-bold my-auto">
                     {{ comment.name }}
                     <span class="text-muted fw-light">
                         {{ comment.created_on }}

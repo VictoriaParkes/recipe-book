@@ -22,7 +22,9 @@ class TestRecipeListView(TestCase, Client):
             author = user,
             cooking_time=1,
             serves=1,
-            ingredients=[{'ingredients': {'ingredient': 'bread', 'amount': '2 slices'}}],
+            ingredients=[{
+                'ingredients': {'ingredient': 'bread', 'amount': '2 slices'}
+            }],
             method=[{'method': 'step 1'}],
             publish_request=True,
             approval_status=2,
@@ -32,7 +34,9 @@ class TestRecipeListView(TestCase, Client):
             author = user,
             cooking_time=1,
             serves=1,
-            ingredients=[{'ingredients': {'ingredient': 'bread', 'amount': '2 slices'}}],
+            ingredients=[{
+                'ingredients': {'ingredient': 'bread', 'amount': '2 slices'}
+            }],
             method=[{'method': 'step 1'}],
             publish_request=False,
             approval_status=0,
@@ -42,7 +46,9 @@ class TestRecipeListView(TestCase, Client):
             author = user,
             cooking_time=1,
             serves=1,
-            ingredients=[{'ingredients': {'ingredient': 'bread', 'amount': '2 slices'}}],
+            ingredients=[{
+                'ingredients': {'ingredient': 'bread', 'amount': '2 slices'}
+            }],
             method=[{'method': 'step 1'}],
             publish_request=True,
             approval_status=1,
@@ -57,7 +63,10 @@ class TestRecipeListView(TestCase, Client):
         test_recipe_1 = Recipe.objects.get(pk=1)
 
         expected_qs = map(repr, [test_recipe_1])
-        test_qs = Recipe.objects.filter(publish_request=True, approval_status=2).order_by('-created_on')
+        test_qs = Recipe.objects.filter(
+            publish_request=True,
+            approval_status=2
+        ).order_by('-created_on')
         self.assertQuerysetEqual(test_qs, expected_qs)
     
 class TestRecipeCreateView(TestCase, Client):
@@ -89,7 +98,7 @@ class TestRecipeCreateView(TestCase, Client):
             'method-0-method': 'step 1',
             'method-1-method': 'step 2',
         })
-        self.assertRedirects(response, '/')
+        self.assertRedirects(response, '/my_recipes')
 
 class TestRecipeDetailsPage(TestCase, Client):
 
@@ -103,7 +112,7 @@ class TestRecipeDetailsPage(TestCase, Client):
             author = user,
             cooking_time=1,
             serves=1,
-            ingredients="[{\"ingredients\": {\"ingredient\": \"test ingredient\", \"amount\": \"2 slices\"}}]",
+            ingredients="[{\"ingredients\": {\"ingredient\": \"test\", \"amount\": \"2\"}}]",
             method="[{\"method\": \"step 1\"}]",
             publish_request=True,
             approval_status=2,
@@ -112,6 +121,9 @@ class TestRecipeDetailsPage(TestCase, Client):
     def test_get_recipe_details_page(self):
         test_recipe_1 = Recipe.objects.get(pk=1)
 
-        response = self.client.get(reverse('recipe_detail', args=(test_recipe_1.slug,)))
+        response = self.client.get(reverse(
+            'recipe_detail',
+            args=(test_recipe_1.slug,)
+        ))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'recipe_detail.html')
