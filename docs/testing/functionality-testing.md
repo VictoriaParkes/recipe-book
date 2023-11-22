@@ -30,6 +30,7 @@ Details of manual testing of the functions of each feature of the website. Chrom
 | Unsave recipe | As logged in user click save button on full recipe details page of a previously saved recipe. | Saves object is removed in database and save button is updated to show recipe saved. | PASS |
 | Like recipe | As logged in user click like button on full recipe details page of another users recipe. | Like object is created in database, like button is updated to show recipe liked and total number of likes is updated. | PASS |
 | Unlike recipe | As logged in user click like button on full recipe details page of a previously liked recipe. | Like object is removed in database, like button is updated to show recipe liked and and total number of likes is updated. | PASS |
+| Tags | View full recipe details with tags and click tag buttons. | Recipe tags displayed under recipe and direct user to list of recipe that have the clicked tag. | PASS |
 | Comment form logged in | View full recipe details as authenticated user. | Comment form is displayed under the recipe. | PASS |
 | Comment form not logged in | View full recipe details as anonymous user. | Comment form is not displayed. | PASS |
 | Submit comment | View full recipe details as authenticated user and submit a comment. | Comment form successfully submitted and message informing user comment is awaiting approval is displayed. Comment object created in database. | PASS |
