@@ -21,11 +21,12 @@ COOKING_TIME = (
     ('4', '3+ hours'),
 )
 
+
 # recipe model
 class Recipe(models.Model):
     title = models.CharField(
         max_length=50,
-        help_text= 'Required, max length 50 characters.'
+        help_text='Required, max length 50 characters.'
     )
     slug = AutoSlugField(populate_from='title', unique=True)
     author = models.ForeignKey(
@@ -52,7 +53,8 @@ class Recipe(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
     publish_request = models.BooleanField(
         default=False,
-        help_text='Check this box to submit your recipe for online publication.'
+        help_text='Check this box to submit your '
+                  'recipe for online publication.'
     )
     approval_status = models.CharField(
         max_length=50,
@@ -67,9 +69,10 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     def number_of_likes(self):
         return self.likes.count()
+
 
 # comment model
 class Comment(models.Model):
@@ -87,6 +90,7 @@ class Comment(models.Model):
     def __str__(self):
         return f'Comment {self.body} by {self.name}'
 
+
 # Save recipe model
 class Saves(models.Model):
     recipe = models.ForeignKey(
@@ -99,6 +103,6 @@ class Saves(models.Model):
 
     class Meta:
         ordering = ['-saved_on']
-    
+
     def __str__(self):
         return f'Recipe saved by {self.user}'

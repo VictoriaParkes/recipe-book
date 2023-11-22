@@ -11,15 +11,16 @@ class TestHomeView(TestCase, Client):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'index.html')
 
+
 class TestRecipeListView(TestCase, Client):
 
     @classmethod
     def setUpTestData(cls):
         user = User.objects.create_user('Name', '', 'password')
-        
+
         Recipe.objects.create(
             title='test1',
-            author = user,
+            author=user,
             cooking_time=1,
             serves=1,
             ingredients=[{
@@ -31,7 +32,7 @@ class TestRecipeListView(TestCase, Client):
         )
         Recipe.objects.create(
             title='test2',
-            author = user,
+            author=user,
             cooking_time=1,
             serves=1,
             ingredients=[{
@@ -43,7 +44,7 @@ class TestRecipeListView(TestCase, Client):
         )
         Recipe.objects.create(
             title='test3',
-            author = user,
+            author=user,
             cooking_time=1,
             serves=1,
             ingredients=[{
@@ -58,7 +59,7 @@ class TestRecipeListView(TestCase, Client):
         response = self.client.get('/browse')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'browse.html')
-    
+
     def test_browse_queryset(self):
         test_recipe_1 = Recipe.objects.get(pk=1)
 
@@ -68,7 +69,8 @@ class TestRecipeListView(TestCase, Client):
             approval_status=2
         ).order_by('-created_on')
         self.assertQuerysetEqual(test_qs, expected_qs)
-    
+
+
 class TestRecipeCreateView(TestCase, Client):
 
     def test_not_logged_in_no_access_to_create_recipe(self):
@@ -100,24 +102,26 @@ class TestRecipeCreateView(TestCase, Client):
         })
         self.assertRedirects(response, '/my_recipes')
 
+
 class TestRecipeDetailsPage(TestCase, Client):
 
     @classmethod
     def setUpTestData(cls):
         user = User.objects.create_user('Name', '', 'password')
-        
+
         Recipe.objects.create(
             title='test1',
             slug='test1',
-            author = user,
+            author=user,
             cooking_time=1,
             serves=1,
-            ingredients="[{\"ingredients\": {\"ingredient\": \"test\", \"amount\": \"2\"}}]",
-            method="[{\"method\": \"step 1\"}]",
+            ingredients=('[{\"ingredients\": {\"ingredient\": \"test\", '
+                         '\"amount\": \"2\"}}]'),
+            method='[{\"method\": \"step 1\"}]',
             publish_request=True,
             approval_status=2,
         )
-        
+
     def test_get_recipe_details_page(self):
         test_recipe_1 = Recipe.objects.get(pk=1)
 

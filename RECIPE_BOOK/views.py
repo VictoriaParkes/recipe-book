@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+
 def handler400(request, exception):
     """
     Custom 400 page
@@ -8,6 +9,7 @@ def handler400(request, exception):
         'page_title': '400'
     }
     return render(request, "errors/400.html", context, status=400)
+
 
 def handler403(request, exception):
     """
@@ -18,6 +20,7 @@ def handler403(request, exception):
     }
     return render(request, "errors/403.html", context, status=403)
 
+
 def handler404(request, exception):
     """
     Custom 404 page
@@ -26,6 +29,7 @@ def handler404(request, exception):
         'page_title': '404'
     }
     return render(request, "errors/404.html", context, status=404)
+
 
 def handler500(request):
     """

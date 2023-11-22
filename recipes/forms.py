@@ -12,6 +12,7 @@ from django.forms import (
 from . import models
 from .models import Recipe, Comment
 
+
 class RecipeDetailsForm(ModelForm):
     '''
     Form class for create recipe form without ingredients or method fields.
@@ -44,6 +45,7 @@ class RecipeDetailsForm(ModelForm):
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
 
+
 class IngredientsWidget(MultiWidget, TextInput):
     '''
     A widget that is composed of multiple widgets.
@@ -66,7 +68,8 @@ class IngredientsWidget(MultiWidget, TextInput):
         if value:
             return [value['ingredient'], value['amount']]
         return ['', '']
-    
+
+
 class IngredientsField(MultiValueField):
     '''
     Define the ingredients field properties that uses the above multiwidget.
@@ -83,10 +86,11 @@ class IngredientsField(MultiValueField):
     # define how to process the values provided into a single piece of data.
     def compress(self, data_list):
         ingredients_dict = dict(
-            ingredient = data_list[0],
-            amount = data_list[1]
+            ingredient=data_list[0],
+            amount=data_list[1]
         )
         return ingredients_dict
+
 
 class IngredientsForm(Form):
     '''
@@ -96,6 +100,7 @@ class IngredientsForm(Form):
         label='',
         help_text='Enter an ingredient and amount or remove empty fields.'
     )
+
 
 class MethodForm(Form):
     '''
@@ -111,10 +116,12 @@ class MethodForm(Form):
         })
     )
 
+
 # Create formset class to add multiple of the same form
 IngredientsFormset = formset_factory(IngredientsForm)
 
 MethodFormset = formset_factory(MethodForm)
+
 
 class CommentForm(forms.ModelForm):
     '''
@@ -124,7 +131,7 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ('body',)
         widgets = {
-            'body': forms.Textarea(attrs={'rows': 3,}),
+            'body': forms.Textarea(attrs={'rows': 3, }),
         }
         labels = {
             'body': 'Add a comment'

@@ -7,6 +7,7 @@ from .forms import (
     MethodFormset
 )
 
+
 class TestRecipeDetailsForm(TestCase):
 
     def test_title_is_required(self):
@@ -14,7 +15,7 @@ class TestRecipeDetailsForm(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn('title', form.errors.keys())
         self.assertEqual(form.errors['title'][0], 'This field is required.')
-    
+
     def test_cooking_time_is_required(self):
         form = RecipeDetailsForm({'title': 'test', 'cooking_time': ''})
         self.assertFalse(form.is_valid())
@@ -33,7 +34,7 @@ class TestRecipeDetailsForm(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn('serves', form.errors.keys())
         self.assertEqual(form.errors['serves'][0], 'This field is required.')
-    
+
     def test_remaining_fields_not_required(self):
         form = RecipeDetailsForm({
             'title': 'test',
@@ -53,6 +54,7 @@ class TestRecipeDetailsForm(TestCase):
             'publish_request'
         ])
 
+
 class TestIngredientsForm(TestCase):
 
     def test_ingredient_is_required(self):
@@ -65,7 +67,7 @@ class TestIngredientsForm(TestCase):
             form.errors['ingredients'][0],
             'This field is required.'
         )
-    
+
     def test_amount_is_required(self):
         form = IngredientsForm({
             'ingredients': {'ingredient': 'bread', 'amount': ''}
@@ -76,7 +78,7 @@ class TestIngredientsForm(TestCase):
             form.errors['ingredients'][0],
             'This field is required.'
         )
-    
+
     def test_ingredients_formset(self):
         data = {
             'form-INITIAL_FORMS': '0',
@@ -89,6 +91,7 @@ class TestIngredientsForm(TestCase):
         formset = IngredientsFormset(data)
         self.assertTrue(formset.is_valid())
 
+
 class TestMethodForm(TestCase):
 
     def test_method_is_required(self):
@@ -96,7 +99,7 @@ class TestMethodForm(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn('method', form.errors.keys())
         self.assertEqual(form.errors['method'][0], 'This field is required.')
-    
+
     def test_method_formset(self):
         data = {
             'form-INITIAL_FORMS': '0',

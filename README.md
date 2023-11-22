@@ -264,6 +264,7 @@ The app uses the Cloudinary cloud service to store static files such as images, 
 - [Tiny PNG](https://tinypng.com/)
 - [Am I Responsive](https://ui.dev/amiresponsive)
 - [favicon.io](https://favicon.io/)
+- [Code Institute Python Linter](https://pep8ci.herokuapp.com/)
 
 ## 6. Local Development and Deployment
 
@@ -374,6 +375,12 @@ os.environ['CLOUDINARY_URL'] = '<API ENVIRONEMENT VARIABLE>'
 ### Browser Compatibility
 
 The website was tested for functionality on different browsers (Chrome, Firefox and Edge) and found to be fully functional on them all.
+
+### Python Linter
+
+The Code Institute Python Linter was used to validate and format the python files neatly. All errors were fixed and no errors were found in the final tests.
+
+![CI Python Linter](docs/testing/python-linter.png)
 
 ### Bugs Encountered
 
