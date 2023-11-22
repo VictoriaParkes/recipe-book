@@ -2,6 +2,8 @@
 
 Recipe Book is an online app designed to build a community of 'foodies' and home cooks who share recipes and join in conversations. All users have access to browse and view published recipes but users must be registered to interact with content, join conversations and submit their own recipes. Registered users can easily submit their recipes to the site via a recipe submission form and can return to edit their recipes or delete them from the site. Each recipe is displayed on the site for other users to access after the author has requested publishing and it has been accepted by admin. Recipes can also be saved to the 'My Recipe Book' section where registered users can access saved recipes more easily and also access recipes they have written.
 
+[The deployed website can be found here](https://vjp-recipe-book-821f4ac9817f.herokuapp.com/)
+
 ## Contents
 
 1. [User Experience (UX)](#1-user-experience-ux)
@@ -376,9 +378,10 @@ The website was tested for functionality on different browsers (Chrome, Firefox 
 ### Bugs Encountered
 
 1. When viewing recipe details as anonymous user, TypeError received ('AnonymousUser' object not iterable). Added 'if' statement to view to check if user is authenticated before querying the 'Saves' database for matching user.
-2. User images were not being submitted, added class 'enctype="multipart/form-data"' to form to allow files to be uploaded.
+2. User images were not being submitted, added class `enctype="multipart/form-data"` to form to allow files to be uploaded.
 3. Refactored my recipe book pages to make paginating and redirecting to 'my recipes' after creating, editing and deleting recipes easier.
 4. Removing all ingredients or method formset from recipe form submitted empty list for model instance, added clause to save recipe but not submit for publication if ingredients or method not entered.
+5. Visiting the admin panel using the admin url without a trailing slash resulted in the return of a 404 error. This was caused by the application attempting to match the given url to the recipe details url pattern which uses the slug of the selected recipe. The error was fixed by using `recipe/<slug:slug>` in the recipe detail url pattern instead of `<slug:slug>`.
 
 ## 8. Credits
 
@@ -387,13 +390,14 @@ The website was tested for functionality on different browsers (Chrome, Firefox 
 [Django Docs](https://docs.djangoproject.com/en/3.2/), [W3Schools](https://www.w3schools.com/) and [Bootstrap Docs](https://getbootstrap.com/docs/5.3/getting-started/introduction/) were frequently referred to in the development of this website:
 
 - Code from Code Institute's CodeStar blog walkthrough project was used and modified to create the commenting feature.
-- Forms were styled using [django-crispy-forms docs](https://django-crispy-forms.readthedocs.io/en/1.14.0/index.html)
-- The multiwidget and multivalue fields in the recipe form were created using [Python – Django: MultiValueField and MultiWidget](https://itecnote.com/tecnote/python-django-multivaluefield-and-multiwidget/) and [Handling multiple input values for single Django form field](https://coderwall.com/p/kq1d5a/handling-multiple-input-values-for-single-django-form-field)
-- The dynamic functionality of the formsets in to recipe form were created using [Adding forms dynamically to a Django formset](https://medium.com/all-about-django/adding-forms-dynamically-to-a-django-formset-375f1090c2b0) and [django-dynamic-formset](https://github.com/elo80ka/django-dynamic-formset)
-- Extra context and querysets were added to views using [When to use get, get_queryset, get_context_data in Django?](https://medium.com/@hassanraza/when-to-use-get-get-queryset-get-context-data-in-django-952df6be036a)
-- Automated tests to assert queryset equality were created using [Testing Equality of Django QuerySets: A Guide](https://copyprogramming.com/howto/how-do-i-test-django-querysets-are-equal)
-- The custom error pages were created using advice from my mentor Brian Macharia
-- The user images failing to upload bug was fixed using [W3Schools](https://www.w3schools.com/tags/att_form_enctype.asp)
+- Forms were styled using [django-crispy-forms docs](https://django-crispy-forms.readthedocs.io/en/1.14.0/index.html).
+- The multiwidget and multivalue fields in the recipe form were created using [Python – Django: MultiValueField and MultiWidget](https://itecnote.com/tecnote/python-django-multivaluefield-and-multiwidget/) and [Handling multiple input values for single Django form field](https://coderwall.com/p/kq1d5a/handling-multiple-input-values-for-single-django-form-field).
+- The dynamic functionality of the formsets in to recipe form were created using [Adding forms dynamically to a Django formset](https://medium.com/all-about-django/adding-forms-dynamically-to-a-django-formset-375f1090c2b0) and [django-dynamic-formset](https://github.com/elo80ka/django-dynamic-formset).
+- Extra context and querysets were added to views using [When to use get, get_queryset, get_context_data in Django?](https://medium.com/@hassanraza/when-to-use-get-get-queryset-get-context-data-in-django-952df6be036a).
+- Automated tests to assert queryset equality were created using [Testing Equality of Django QuerySets: A Guide](https://copyprogramming.com/howto/how-do-i-test-django-querysets-are-equal).
+- The custom error pages were created using advice from my mentor Brian Macharia.
+- The user images failing to upload bug was fixed using [W3Schools](https://www.w3schools.com/tags/att_form_enctype.asp).
+- The admin panel 404 error was fixed using [Stack Overflow](https://stackoverflow.com/questions/9463173/append-slash-not-working).
 
 ### Content
 
