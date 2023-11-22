@@ -15,6 +15,7 @@ from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 import json
 
+
 class Index(ListView):
     '''
     Return top three most liked recipes that are currently public on the site.
@@ -34,10 +35,11 @@ class Index(ListView):
         context['page_title'] = 'Home'
         return context
 
+
 class Browse(ListView):
     '''
-    Return all recipes that have been submitted for publication and approved by admin, 
-    in reverse order of date created.
+    Return all recipes that have been submitted for publication and approved
+    by admin, in reverse order of date created.
     Display 12 recipes per page.
     '''
     model = Recipe
@@ -53,6 +55,7 @@ class Browse(ListView):
         context['page_title'] = 'Browse Recipes'
         return context
 
+
 class TagBrowse(ListView):
     '''
     Display a list of recipes with a certain tag.
@@ -67,10 +70,11 @@ class TagBrowse(ListView):
 
     def get_queryset(self):
         '''
-        Return currently published recipes with the tag matching the button 
+        Return currently published recipes with the tag matching the button
         value that the user clicked.
         '''
         return Recipe.objects.filter(tags__slug=self.kwargs.get('tag_slug'))
+
 
 class SavedRecipes(LoginRequiredMixin, ListView):
     '''
@@ -83,10 +87,10 @@ class SavedRecipes(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['page_title'] = 'Saved Recipes'
         return context
-    
+
     def get_queryset(self):
         '''
-        Return currently published recipes that have been saved by the user, 
+        Return currently published recipes that have been saved by the user,
         in reverse order of saved date.
         '''
         return Recipe.objects.filter(
@@ -94,6 +98,7 @@ class SavedRecipes(LoginRequiredMixin, ListView):
             publish_request=True,
             approval_status=2
         ).order_by('-saves__saved_on')
+
 
 class MyRecipes(LoginRequiredMixin, ListView):
     '''
@@ -109,12 +114,13 @@ class MyRecipes(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         '''
-        Return all recipes that user has written, 
+        Return all recipes that user has written,
         in reverse order of created date.
         '''
         return Recipe.objects.filter(
             author=self.request.user
         ).order_by('-created_on')
+
 
 class RecipeDetail(View):
     def get(self, request, slug, *args, **kwargs):
@@ -187,7 +193,7 @@ class RecipeDetail(View):
             comment.recipe = recipe
             comment.save()
             messages.success(request, 'Comment Successful!')
-        
+
         return render(
             request,
             'recipe_detail.html',
@@ -204,6 +210,7 @@ class RecipeDetail(View):
             },
         )
 
+
 class RecipeLike(LoginRequiredMixin, View):
     '''
     Allow authenticated user to like/unlike recipes.
@@ -215,6 +222,7 @@ class RecipeLike(LoginRequiredMixin, View):
         else:
             recipe.likes.add(request.user)
         return HttpResponseRedirect(reverse('recipe_detail', args=[slug]))
+
 
 class RecipeSave(LoginRequiredMixin, View):
     '''
@@ -237,6 +245,7 @@ class RecipeSave(LoginRequiredMixin, View):
             )
             saved_recipe.save()
         return HttpResponseRedirect(reverse('recipe_detail', args=[slug]))
+
 
 class CreateRecipe(LoginRequiredMixin, CreateView):
     """
@@ -269,7 +278,7 @@ class CreateRecipe(LoginRequiredMixin, CreateView):
             context['method_formset'] = MethodFormset(prefix='method')
             context['page_title'] = 'Create Recipe'
         return context
-    
+
     def form_valid(self, form):
         '''
         Validate submitted form.
@@ -294,13 +303,15 @@ class CreateRecipe(LoginRequiredMixin, CreateView):
             if form.instance.publish_request:
                 # if recipe does not include ingredients or method,
                 # save but don't submit for publication
-                if form.instance.ingredients == "[]" or form.instance.method == "[]":
+                if (form.instance.ingredients == "[]" or
+                        form.instance.method == "[]"):
                     form.instance.publish_request = False
                     # display message informing user recipe requires
                     # ingredients and method for publication
                     messages.warning(
                         self.request,
-                        'Recipe saved but requires ingredients and method for publication'
+                        ('Recipe saved but requires ingredients and '
+                            'method for publication')
                     )
                 else:
                     # set approval status to 'pending approval'
@@ -314,21 +325,23 @@ class CreateRecipe(LoginRequiredMixin, CreateView):
                 messages.success(self.request, 'Recipe saved in your recipes')
             return super().form_valid(form)
 
+
 class RecipeOwnerTest(UserPassesTestMixin):
     '''
-    If the user matches the recipe author they will have permission 
+    If the user matches the recipe author they will have permission
     to perform action.
-    If the user does not match the recipe author the user will be 
+    If the user does not match the recipe author the user will be
     redirected to 403 error page.
     '''
     def test_func(self):
         recipe = self.get_object()
         return recipe.author == self.request.user
 
+
 class EditRecipe(LoginRequiredMixin, RecipeOwnerTest, UpdateView):
     """
     Allow authenticated user that passes RecipeOwnerTest to edit recipes.
-    Display create recipe form populated with values from the 
+    Display create recipe form populated with values from the
     recipe being edited.
     """
     model = Recipe
@@ -378,14 +391,16 @@ class EditRecipe(LoginRequiredMixin, RecipeOwnerTest, UpdateView):
             if form.instance.publish_request:
                 # if recipe does not include ingredients or method,
                 # save but don't submit for publication
-                if form.instance.ingredients == "[]" or form.instance.method == "[]":
+                if (form.instance.ingredients == "[]" or
+                        form.instance.method == "[]"):
                     form.instance.publish_request = False
                     form.instance.approval_status = 0
                     # display message informing user recipe requires
                     # ingredients and method for publication
                     messages.warning(
                         self.request,
-                        'Recipe saved but requires ingredients and method for publication'
+                        ('Recipe saved but requires ingredients and '
+                            'method for publication')
                     )
                 else:
                     # set approval status to 'pending approval'
@@ -398,6 +413,7 @@ class EditRecipe(LoginRequiredMixin, RecipeOwnerTest, UpdateView):
                 form.instance.approval_status = 0
                 messages.success(self.request, 'Recipe successfully edited')
             return super().form_valid(form)
+
 
 class DeleteRecipe(LoginRequiredMixin, RecipeOwnerTest, DeleteView):
     '''
