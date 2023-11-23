@@ -44,6 +44,8 @@ This project was developed using Agile methodology which allowed me to iterative
 
 GitHub Issues and Projects were used to manage the development process. Each part of the app is divided into Epics_ which are broken down into User Stories with Tasks. An Epic represents a large body of work, such as a feature. The board view of the Project feature was used to display and manage my progress in the form of a 'kanban board'. The user stories were added to the 'Todo' column to be prioritised for development, moved to the 'In Progress' column to indicate development of the feature had begun and finally moved to the 'Done' column when the feature had been implemented and the acceptance criteria had been met.
 
+![Kanban Board](docs/kanban.png)
+
 User stories were prioritised using the MoSCoW prioritisation technique. Each user story was given one of the following labels:
 
 - Must have - to indicate the user story is guaranteed to be delivered.
@@ -387,6 +389,29 @@ The Code Institute Python Linter was used to validate and format the python file
 [JSHint](https://jshint.com/) was used to validate the file script.js. All errors were fixed and no errors were found in the final tests.
 
 ![script.js validation](docs/testing/js-hint.png)
+
+### User Stories
+
+| User Story | Acceptance Criteria | Status |
+|----------|-----------|----------------|
+| As a site user I can view a paginated list of recipes so that I can select one to read. | <ol><li>Recipes can be viewed in list format</li><li>Page is responsive</li><li>List is paginated</li></ol> | COMPLETE |
+| As a Site User I can click on a recipe so that I can read the full recipe. | <ol><li>Recipe details displayed clearly</li><li>Like button toggles liked/unliked</li><li>Number of likes displayed with like button</li><li>Save button toggles saved/unsaved</li><li>Tags link to other recipes with same tag</li></ol> | COMPLETE |
+| As a Site User / Admin I can view the number of likes on each recipe so that I can see which is the most popular. | <ol><li>Recipe likes are clearly indicated</li><li>Total count is displayed</li></ol> | COMPLETE |
+| As a Site User I can save recipes so that I can make a collection the recipes I like. | <ol><li>User can save recipes</li><li>Saved recipes can be viewed in list format</li><li>Saved recipes can be opened and viewed in full</li><li>Saved recipes can be 'unsaved'</li></ol> | COMPLETE |
+| As a Site User I can like or unlike another user's recipe so that I can interact with the content. | <ol><li>Like button likes/unlikes recipe</li><li>Total recipe likes visible</li></ol> | COMPLETE |
+| As a Site User I can leave comments on a recipe so that I can be involved in the conversation. | <ol><li>Comments can be left by logged in users</li><li>Comments can be viewed by all users</li><li>Comments must be approved by admin before being displayed to users</li></ol> | COMPLETE |
+| As a Site User I can create recipes so that I can share them on the site. | <ol><li>Create recipe form is available to registered user when logged in.</li><li>Form contains inputs for Title, description, image, ingredients, method, tags, publish request, request publishing and submit.</li><li>Form submission saves recipe to database.</li><li>User input errors are addressed with error messages.</li></ol> | COMPLETE |
+| As a Site User I can publish and unpublish my recipes so that I can choose whether to share the recipe or not. | <ol><li>Check box clearly visible in form.</li><li>Checked sets publish request value to true and approval status to pending approval.</li><li>Unchecked sets publish request to false and approval status to unpublished.</li></ol> | COMPLETE |
+| As a Site User I can update/edit my recipes so that I can revise the recipe. | <ol><li>Edit recipe button takes user to edit recipe form.</li><li>Edit recipe form is prepopulated with current recipe data.</li><li>Edited recipe data is replaces current recipe data when saved.</li><li>Recipe requires approval if publishing is requested.</li><li>Recipe approval status is set to 'unpublished' if publishing is not requested.</li></ol> | COMPLETE |
+| As a Site User I can delete my created recipe so that I can remove the recipe from the site. | <ol><li>Logged in users can delete the recipes they have written.</li><li>Recipes can't be deleted by users who are not the author.</li><li>Deleted recipes are removed from the database.</li></ol> | COMPLETE |
+| As a Site Admin I can unpublish recipes so that manage content on the site. | <ol><li>Recipe approval status can be edited by admin.</li></ol> | COMPLETE |
+| As a user I can use a simple navigation menu so that easily find content. | <ol><li>Navbar present.</li><li>Each page can be reached from navbar.</li><li>Logo is link to home page.</li></ol> | COMPLETE |
+| As a user I can view the navigation menu on any screen sizes so that navigating the site remains easy on all my devices. | <ol><li>Navbar content collapses behind a button on smaller screens.</li></ol> | COMPLETE |
+| As a User I can easily find social media links so that I can find and interact with a community of app users. | <ol><li>Social media links are clearly visible in footer.</li><li>All links open social media site in a new tab.</li></ol> | COMPLETE |
+| As a user I can sign up for an account so that I can save, share and interact with site content. | <ol><li>Sign up page is easily accessed.</li><li>Submission of sign up form creates user account.</li><li>Sign up page is styled for ease of use and readability.</li></ol> | COMPLETE |
+| As a user I can easily sign in to my account so that I can easily use the site features on return visits. | <ol><li>Sign in page is easily accessed.</li><li>Submission of sign in form signs the user into their account.</li><li>Sign in page is styled for ease of use and readability.</li></ol> | COMPLETE |
+| As a user I can easily log out of my account so that I can keep my account secure. | <ol><li>Log out page is easily accessed.</li><li>Submission of log out form logs user out of their account.</li><li>Log out page is styled for ease of use and readability.</li></ol> | COMPLETE |
+| As a Site Admin I can approve or reject submitted user recipes so that I can manage the content of the site. | <ol><li>Approval status can be set in admin view.</li><li>Recipes can be filtered by approval status</li></ol> | COMPLETE |
 
 ### Bugs Encountered
 
