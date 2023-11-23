@@ -1,6 +1,3 @@
-let messages = document.getElementById('msg');
-let alert = new bootstrap.Alert(messages);
-
 /*
 Wait for DOM to finish loading before adding event listeners 
 */
@@ -74,6 +71,6 @@ function toggleSave(e) {
 }
 
 // timer to dismiss messages
-setTimeout(function() {
-    alert.close();
+window.setTimeout(function() {
+    $(".alert").remove();
 }, 3000);

@@ -265,6 +265,7 @@ The app uses the Cloudinary cloud service to store static files such as images, 
 - [Am I Responsive](https://ui.dev/amiresponsive)
 - [favicon.io](https://favicon.io/)
 - [Code Institute Python Linter](https://pep8ci.herokuapp.com/)
+- [JSHint](https://jshint.com/)
 
 ## 6. Local Development and Deployment
 
@@ -381,6 +382,11 @@ The website was tested for functionality on different browsers (Chrome, Firefox 
 The Code Institute Python Linter was used to validate and format the python files neatly. All errors were fixed and no errors were found in the final tests.
 
 ![CI Python Linter](docs/testing/python-linter.png)
+
+### JSHint JavaScript Validator Testing
+[JSHint](https://jshint.com/) was used to validate the file script.js. All errors were fixed and no errors were found in the final tests.
+
+![script.js validation](docs/testing/js-hint.png)
 
 ### Bugs Encountered
 
