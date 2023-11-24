@@ -225,8 +225,9 @@ The app uses the Cloudinary cloud service to store static files such as images, 
 
 ### Future features
 
-- Fuctionality to give each recipe a star rating.
-- Search functionality to search for recipes by keyword.
+- Add functionality for authenticated users to give recipes a star rating, this would give further quick and easy user interaction.
+- Add search functionality to search for recipes by keyword. This would make it easier for user to find content they are interested in and improve user experience.
+- Add a profile page feature for users to introduce themselves to the community and give authenticated users a place to share information about themselves.
 
 ## 5. Technologies Used
 
@@ -268,6 +269,7 @@ The app uses the Cloudinary cloud service to store static files such as images, 
 - [favicon.io](https://favicon.io/)
 - [Code Institute Python Linter](https://pep8ci.herokuapp.com/)
 - [JSHint](https://jshint.com/)
+- [Coverage](https://coverage.readthedocs.io/)
 
 ## 6. Local Development and Deployment
 
@@ -386,11 +388,26 @@ The Code Institute Python Linter was used to validate and format the python file
 ![CI Python Linter](docs/testing/python-linter.png)
 
 ### JSHint JavaScript Validator Testing
+
 [JSHint](https://jshint.com/) was used to validate the file script.js. All errors were fixed and no errors were found in the final tests.
 
 ![script.js validation](docs/testing/js-hint.png)
 
-### User Stories
+### Automated Testing
+
+#### Unit Tests
+
+The automated tests were written using Django's built-in testing framework which use Python's unittest module. The test files can be found in the app directory.
+
+![Unit Tests Results](docs/testing/unit-test.png)
+
+#### Coverage
+
+The coverage report was generated using the [Coverage](https://coverage.readthedocs.io/) tool.
+
+![Coverage Report](docs/testing/coverage-report.png)
+
+### Testing User Stories
 
 | User Story | Acceptance Criteria | Status |
 |----------|-----------|----------------|
