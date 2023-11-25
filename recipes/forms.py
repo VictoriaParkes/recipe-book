@@ -33,7 +33,6 @@ class RecipeDetailsForm(ModelForm):
         }
         widgets = {
             'title': forms.TextInput(attrs={
-                'max_length': 200,
                 'placeholder': 'Enter recipe title'
             }),
             'description': forms.Textarea(attrs={
