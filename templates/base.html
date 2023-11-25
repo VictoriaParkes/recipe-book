@@ -123,9 +123,10 @@
     <script src="https://kit.fontawesome.com/8e292ce701.js" crossorigin="anonymous"></script>
     <!-- Javascript -->
     <script src="{% static 'js/script.js' %}"></script>
-    <!-- Dynamic formset javascript -->
+    <!-- Dynamic-formset javascript -->
     <script src="{% static 'libraries/jquery.formset.js' %}"></script>
-    <script type="text/javascript">
+    <!-- Inline javascript added following dynamic-formset docs -->
+    <script>
         $(function() {
             $('#ingredients-formset tbody tr').formset({
                 prefix: '{{ ingredients_formset.prefix }}',
