@@ -195,6 +195,7 @@ Custom error pages were created for the 400, 403, 404, and 500 errors. These pag
 The Recipe Book app uses a relational database to store and manage data. The relational database management system software used for this project is [PostgreSQL](https://www.postgresql.org/) which is hosted on the cloud service [ElephantSQL](https://www.elephantsql.com/).
 
 ![ElephantSQL](docs/images/elephantsql.png)
+![Recipes Database](docs/images/recipes-database.png)
 
 #### Recipe Model
 
