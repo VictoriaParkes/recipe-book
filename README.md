@@ -299,8 +299,11 @@ The app uses the Cloudinary cloud service to store static files such as images, 
 - [Tiny PNG](https://tinypng.com/)
 - [Am I Responsive](https://ui.dev/amiresponsive)
 - [favicon.io](https://favicon.io/)
+- [The W3C Markup Validation Service](https://validator.w3.org/)
+- [The W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/)
 - [Code Institute Python Linter](https://pep8ci.herokuapp.com/)
 - [JSHint](https://jshint.com/)
+- [Chrome DevTools](https://developer.chrome.com/docs/devtools/)
 - [Coverage](https://coverage.readthedocs.io/)
 
 ## 6. Local Development and Deployment
@@ -415,7 +418,7 @@ The website was tested for functionality on different browsers (Chrome, Firefox 
 
 ### Device Compatability and Responsiveness
 
-The app was tested on the following devices, using Chrome Developer Tools:
+The app was tested on the following devices, using Chrome DevTools:
 
 - iPhone SE
 - iPhone 12 Pro
@@ -441,6 +444,7 @@ The [W3C Markup Validation Service](https://validator.w3.org/) was used to valid
 ![Browse Page Validation](docs/testing/validation/browse-html-validation.png)
 ![Saved Recipes Page Validation](docs/testing/validation/saved-html-validation.png)
 ![My Recipes Page Validation](docs/testing/validation/my-recipes-html-validation.png)
+![Delete Recipe Page Validation](docs/testing/validation/del-recipe-html-validation.png)
 
 ## W3C CSS Validator Testing
 
@@ -459,6 +463,76 @@ The Code Institute Python Linter was used to validate and format the python file
 [JSHint](https://jshint.com/) was used to validate the file script.js. All errors were fixed and no errors were found in the final tests.
 
 ![script.js validation](docs/testing/js-hint.png)
+
+### Lighthouse Auditing
+
+Lighthouse audit reports were generated through Chrome DevTools to test the performance, accessibility, best practices and SEO of the website during the development of the website.
+
+Lighthouse audit reports are as follows:
+
+#### Home Page - Mobile
+
+![Home page lighthouse audit report mobile](docs/testing/lighthouse/lighthouse-home-mobile.png)
+
+#### Home Page - Desktop
+
+![Home page lighthouse audit report desktop](docs/testing/lighthouse/lighthouse-home-desktop.png)
+
+#### Browse Page - Mobile
+
+![Browse page lighthouse audit report mobile](docs/testing/lighthouse/lighthouse-browse-mobile.png)
+
+#### Browse Page - Desktop
+
+![Browse page lighthouse audit report desktop](docs/testing/lighthouse/lighthouse-browse-desktop.png)
+
+#### Saved Recipes Page - Mobile
+
+![Saved Recipes page lighthouse audit report mobile](docs/testing/lighthouse/lighthouse-saved-recipes-mobile.png)
+
+#### Saved Recipes Page - Desktop
+
+![Saved Recipes page lighthouse audit report desktop](docs/testing/lighthouse/lighthouse-saved-recipes-desktop.png)
+
+#### My Recipes Page - Mobile
+
+![My Recipes page lighthouse audit report mobile](docs/testing/lighthouse/lighthouse-my-recipes-mobile.png)
+
+#### My Recipes Page - Desktop
+
+![My Recipes page lighthouse audit report desktop](docs/testing/lighthouse/lighthouse-my-recipes-desktop.png)
+
+#### Recipe Details Page - Mobile
+
+![Recipe Details page lighthouse audit report mobile](docs/testing/lighthouse/lighthouse-recipe-details-mobile.png)
+
+#### Recipe Details Page - Desktop
+
+![Recipe Details page lighthouse audit report desktop](docs/testing/lighthouse/lighthouse-recipe-details-desktop.png)
+
+#### Create Recipe Page - Mobile
+
+![Create Recipe page lighthouse audit report mobile](docs/testing/lighthouse/lighthouse-create-mobile.png)
+
+#### Create Recipe Page - Desktop
+
+![Create Recipe page lighthouse audit report desktop](docs/testing/lighthouse/lighthouse-create-desktop.png)
+
+#### Edit Recipe Page - Mobile
+
+![Edit Recipe page lighthouse audit report mobile](docs/testing/lighthouse/lighthouse-edit-mobile.png)
+
+#### Edit Recipe Page - Desktop
+
+![Edit Recipe page lighthouse audit report desktop](docs/testing/lighthouse/lighthouse-edit-desktop.png)
+
+#### Delete Recipe Page - Mobile
+
+![Delete Recipe page lighthouse audit report mobile](docs/testing/lighthouse/lighthouse-confirm-del-mobile.png)
+
+#### Delete Recipe Page - Desktop
+
+![Delete Recipe page lighthouse audit report desktop](docs/testing/lighthouse/lighthouse-confirm-del-desktop.png)
 
 ### Automated Testing
 
