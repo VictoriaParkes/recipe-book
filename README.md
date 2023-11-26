@@ -21,24 +21,32 @@ Recipe Book is an online app designed to build a community of 'foodies' and home
 
 ### User Stories
 
-- As a site user I can view a paginated list of recipes so that I can select one to read.
-- As a Site User I can click on a recipe so that I can read the full recipe.
-- As a Site User / Admin I can view the number of likes on each recipe so that I can see which is the most popular.
-- As a Site User I can save recipes so that I can make a collection the recipes I like.
-- As a Site User I can like or unlike another user's recipe so that I can interact with the content.
-- As a Site User I can leave comments on a recipe so that I can be involved in the conversation.
+#### Epic: Navigation
+
+- As a user I can use a simple navigation menu so that easily find content.
+- As a user I can view the navigation menu on any screen sizes so that navigating the site remains easy on all my devices.
+- As a User I can easily find social media links so that I can find and interact with a community of app users.
+
+#### Epic: Recipe CRUD
+
 - As a Site User I can create recipes so that I can share them on the site.
 - As a Site User I can publish and unpublish my recipes so that I can choose whether to share the recipe or not.
 - As a Site User I can update/edit my recipes so that I can revise the recipe.
 - As a Site User I can delete my created recipe so that I can remove the recipe from the site.
-- As a user I can use a simple navigation menu so that easily find content.
-- As a user I can view the navigation menu on any screen sizes so that navigating the site remains easy on all my devices.
-- As a User I can easily find social media links so that I can find and interact with a community of app users.
+- As a Site Admin I can unpublish recipes so that manage content on the site.
+- As a site user I can view a paginated list of recipes so that I can select one to read.
+- As a Site User I can click on a recipe so that I can read the full recipe.
+- As a Site User I can save recipes so that I can make a collection the recipes I like.
+- As a Site User / Admin I can view the number of likes on each recipe so that I can see which is the most popular.
+- As a Site User I can like or unlike another user's recipe so that I can interact with the content.
+- As a Site User I can leave comments on a recipe so that I can be involved in the conversation.
+- As a Site Admin I can approve or reject submitted user recipes so that I can manage the content of the site.
+
+#### Epic: User Account
+
 - As a user I can sign up for an account so that I can save, share and interact with site content.
 - As a user I can easily sign in to my account so that I can easily use the site features on return visits.
 - As a user I can easily log out of my account so that I can keep my account secure.
-
-- As a Site Admin I can approve or reject submitted user recipes so that I can manage the content of the site.
 
 ## 2. Agile Development
 
