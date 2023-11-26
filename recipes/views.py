@@ -410,8 +410,14 @@ class DeleteRecipe(LoginRequiredMixin, RecipeOwnerTest, DeleteView):
     model = Recipe
     template_name = 'recipe_confirm_delete.html'
     success_url = reverse_lazy('my_recipes')
+    success_message = "Recipe successfully deleted"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['page_title'] = 'Delete Recipe'
         return context
+
+    # Display success message
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super().delete(request, *args, **kwargs)
