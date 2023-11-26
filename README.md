@@ -393,6 +393,19 @@ os.environ['CLOUDINARY_URL'] = '<API ENVIRONEMENT VARIABLE>'
 - The requirements.txt file in the project was updated to include details on the project dependencies. Steps to do this are :
   - Enter the following command at the terminal prompt : "pip3 freeze > requirements.txt"
   - Commit changes to requirements.txt and push to GitHub.
+- In `setting.py`, add Heroku Hostname to ALLOWED_HOSTS.
+
+```python
+ALLOWED_HOSTS = ["PROJECT_NAME.herokuapp.com", "YOUR_HOSTNAME"]
+```
+
+- Make surea file named Procfile exists on the top level directory which contans the following code:
+
+```python
+web: gunicorn PROJECT_NAME.wsgi
+```
+
+- Commit changes and push to GitHub.
 - Log in to Heroku, create an account if necessary.
 - From the Heroku dashboard, click "Create new app". For a new account a button will be displayed on screen, if you already have one or more apps created a link to this function is located in the "New" dropdown menu at the top right of the screen.
 - On the Create New App page, enter a unique name for the application and select region. Then click Create app.
