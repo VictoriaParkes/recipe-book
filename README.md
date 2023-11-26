@@ -413,6 +413,41 @@ os.environ['CLOUDINARY_URL'] = '<API ENVIRONEMENT VARIABLE>'
 
 The website was tested for functionality on different browsers (Chrome, Firefox and Edge) and found to be fully functional on them all.
 
+### Device Compatability and Responsiveness
+
+The app was tested on the following devices, using Chrome Developer Tools:
+
+- iPhone SE
+- iPhone 12 Pro
+- Pixel 5
+- Samsung Galaxy S8+
+- Samsung Galaxy S20 Ultra
+- iPad Air
+- iPad Mini
+- Surface Pro 7
+- Surface Duo
+- Galaxy Fold
+- Samsung Galaxy A51
+- Nest Hub
+- Nest Hub Max
+- iPad
+- iPadPro
+
+## W3C HTML Validator Testing
+
+The [W3C Markup Validation Service](https://validator.w3.org/) was used to validate the HTML files.
+
+![Home Page Validation](docs/testing/validation/index-html-validation.png)
+![Browse Page Validation](docs/testing/validation/browse-html-validation.png)
+![Saved Recipes Page Validation](docs/testing/validation/saved-html-validation.png)
+![My Recipes Page Validation](docs/testing/validation/my-recipes-html-validation.png)
+
+## W3C CSS Validator Testing
+
+The [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/) was used to validate the CSS in the stylesheet `style.css`.
+
+![style.css validation](docs/testing/validation/css-validation.png)
+
 ### Python Linter
 
 The Code Institute Python Linter was used to validate and format the python files neatly. All errors were fixed and no errors were found in the final tests.
