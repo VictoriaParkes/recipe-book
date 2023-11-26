@@ -1,5 +1,7 @@
 # Recipe Book
 
+![Mockup Screenshots](docs/images/mockup-screenshots.png)
+
 Recipe Book is an online app designed to build a community of 'foodies' and home cooks who share recipes and join in conversations. All users have access to browse and view published recipes but users must be registered to interact with content, join conversations and submit their own recipes. Registered users can easily submit their recipes to the site via a recipe submission form and can return to edit their recipes or delete them from the site. Each recipe is displayed on the site for other users to access after the author has requested publishing and it has been accepted by admin. Recipes can also be saved to the 'My Recipe Book' section where registered users can access saved recipes more easily and also access recipes they have written.
 
 [The deployed website can be found here](https://vjp-recipe-book-821f4ac9817f.herokuapp.com/)
@@ -44,7 +46,7 @@ This project was developed using Agile methodology which allowed me to iterative
 
 GitHub Issues and Projects were used to manage the development process. Each part of the app is divided into Epics_ which are broken down into User Stories with Tasks. An Epic represents a large body of work, such as a feature. The board view of the Project feature was used to display and manage my progress in the form of a 'kanban board'. The user stories were added to the 'Todo' column to be prioritised for development, moved to the 'In Progress' column to indicate development of the feature had begun and finally moved to the 'Done' column when the feature had been implemented and the acceptance criteria had been met.
 
-![Kanban Board](docs/kanban.png)
+![Kanban Board](docs/images/kanban.png)
 
 User stories were prioritised using the MoSCoW prioritisation technique. Each user story was given one of the following labels:
 
@@ -74,7 +76,7 @@ The Recipe Book app is designed with a simple structure to ensure the app is eas
 
 ### Colour Scheme
 
-![colour palette](docs/colour-palette.png)
+![colour palette](docs/images/colour-palette.png)
 
 The colour scheme was chosen to complement the colours in the images without causing distraction and provide contrast for good readability of the information. The colour palette was created using [Coolors](https://coolors.co/).
 
@@ -101,21 +103,32 @@ All icons were sourced from [Font Awesome](https://fontawesome.com/).
 
 The navigation menu is featured on all pages to provide a consistent means of navigating the site. The menu provides links to 'Home' page, 'Browse' page, 'My Recipe Book' page, 'Create Recipe' page, a login link when the user is unauthenticated and a logout link when the user is authenticated. It is fully responsive, collapsing into a navbar toggle button which presents the navigation menu as a dropdown menu. A navbar brand and image features on the left of the navbar, providing an additional link to the 'Home' page.
 
+![Navigation Expanded](docs/images/features/nav-expanded.png)
+![Navigation Toggle](docs/images/features/nav-toggle.png)
+
 ### 'Home' Page
 
-The 'Home' page features a hero section with a decorative image and a call to action which encourages unauthenticated users to sign up to the website or encourages authenticated users to browse recipes on the site. This page also features a section displaying the top three most liked recipes in a responsive column format as card that are links to the full recipe details.
+The 'Home' page features a hero section with a decorative image and a call to action which encourages unauthenticated users to sign up to the website or encourages authenticated users to browse recipes on the site. This page also features a section displaying the top three most liked recipes in a responsive column format as cards that are links to the full recipe details.
+
+![Home Page](docs/images/features/home-page.png)
 
 ### 'Browse' Page
 
 The 'Browse' page features a paginated list of all currently published recipes displayed as cards. Clicking anywhere on a recipe card will display the full recipe details. This page is displayed in a fully responsive column format. If there are no published recipes available for display, text reading 'There are no recipes yet' is displayed.
 
+![Browse Page](docs/images/features/browse-page.png)
+
 ### 'Saved Recipes' Page
 
 The 'Saved Recipes' page can be accessed by authenticated users only and displays a paginated list of all currently published recipes that the user has saved as cards. Clicking anywhere on a recipe card will display the full recipe details. This page is displayed in a fully responsive column format. If the user has no saved recipes, text reading 'You have not saved any recipes yet' is displayed. This page reuses the 'Browse' template. Unauthenticated users are redirected to the login page.
 
+![Saved Recipes Page](docs/images/features/saved-recipes.png)
+
 ### 'My Recipes' Page
 
 The 'My Recipes' page can be accessed by authenticated users only and displays a paginated list of all recipes written by the user as cards. Clicking anywhere on a recipe card will display the full recipe details. This page is displayed in a fully responsive column format. If the user has not written any recipes, text reading 'You have not written any recipes yet' is displayed. This page reuses the 'Browse' template. Unauthenticated users are redirected to the login page.
+
+![My Recipes Page](docs/images/features/my-recipes.png)
 
 ### Recipe Details Page
 
@@ -128,6 +141,8 @@ The ingredients and method sections are displayed in two columns on larger scree
 Below the ingredients and method any tags entered by the author are displayed which are a link to the browse page where other recipes that contain the same tag are displayed. This feature allows users to more easily find similar recipes.
 
 The commenting feature is also featured on the full recipe details page. Authenticated user are presented with a text input which can be used to submit a comment. Comments must be approved by admin before they will be displayed on the site. Upon submitting a comment a message is displayed inform the user that their comment has be successfully submitted and is awaiting approval. Approved comments for a recipe are displayed on the full recipe details page to all user of the site along with a total count of comments for the recipe.
+
+![Recipe Details Page](docs/images/features/recipe-details.png)
 
 ### Create/Edit Recipe Page
 
@@ -147,17 +162,31 @@ Django formsets and a jquery plugin called django-dynamic-formset are used for i
 
 The form features a submit button to submit a recipe and a cancel button to return to the 'browse' page without submitting the form. Upon successful form submission the user is returned to the 'My Recipes' page.
 
+When editing a recipe the form fields are prepopulated with the existing recipe details ready to be edited by the user. Django's UserPassesTestMixin was used to limit access to logged-in users that pass a test to check that they are the author of the recipe. This ensures that only the recipe author can edit any recipe.
+
+![Create Recipe Page](docs/images/features/create-recipe.png)
+
 ### User Authentication
 
 The app uses the Django Allauth package to handle user authentication and enable authenticated users to utilise the CRUD functionalities. The package provides a set of views and templates to handle user registration, login and logout. Defensive programming has been used throughout the site to prevent users accessing pages when they don't have the relevant permissions. To access the admin panel the user requires 'superuser' or 'staff status' permission status. Django's LoginRequired mixin is used to limit access to anonymous users and redirect them to the login page when they try to view content for which they require an account to access. Content is protected from unauthorised changes with the use of user_passes_test decorator, for example recipes can only be edited by the author of the recipe. This decorator causes unauthorised users to be redirected to a 403 error page informing the user they are not permitted to perform the action.
+
+![Sign In Page](docs/images/features/sign-in.png)
 
 ### Admin Panel
 
 Django's admin panel can be accessed by 'superusers' and users with the permission of 'staff status'. The admin panel is used to manage site content by setting the approval status of recipes and comments. A list of all tags entered can also be viewed form the admin panel and can be deleted , edited and added to if needed. Each data model is registered with the admin using the register decorator so they are easily accessed and managed.
 
+### Error Pages
+
+Custom error pages were created for the 400, 403, 404, and 500 errors. These pages give the user context of the error that has occurred. The navigation menu is still available to the user for continued app use.
+
+![404 Error Page](docs/images/features/custom-error.png)
+
 ### Data Models
 
 The Recipe Book app uses a relational database to store and manage data. The relational database management system software used for this project is [PostgreSQL](https://www.postgresql.org/) which is hosted on the cloud service [ElephantSQL](https://www.elephantsql.com/).
+
+![ElephantSQL](docs/images/elephantsql.png)
 
 #### Recipe Model
 
@@ -217,11 +246,13 @@ Saved_on - a DateTimeField that autopopulates with the current date and time whe
 
 The Entity Relationship Diagram below shows the structure of the database and the relationships between the tables.
 
-![Entity Relationship Diagram](docs/erd.png)
+![Entity Relationship Diagram](docs/images/erd.png)
 
 ### Static File Storage
 
 The app uses the Cloudinary cloud service to store static files such as images, CSS, and JavaScript files. To store the recipe images uploaded by user when creating a recipe, the Cloudinary field uses the Cloudinary API to upload the images to the Cloudinary server and store the image URL in the database.
+
+![Cloudinary Media Explorer](docs/images/cloudinary.png)
 
 ### Future features
 
@@ -259,6 +290,7 @@ The app uses the Cloudinary cloud service to store static files such as images, 
 - [GitHub](https://github.com/)
 - [CodeAnywhere](https://app.codeanywhere.com/)
 - [Heroku](https://heroku.com/)
+- [ElephantSQL](https://www.elephantsql.com/)
 - [Cloudinary](https://cloudinary.com/)
 - [Balsamiq](https://balsamiq.com/)
 - [Lucidchart](https://www.lucidchart.com/pages)
@@ -397,7 +429,7 @@ The Code Institute Python Linter was used to validate and format the python file
 
 #### Unit Tests
 
-The automated tests were written using Django's built-in testing framework which use Python's unittest module. The test files can be found in the app directory.
+The automated tests were written using Django's built-in testing framework which use Python's unittest module. By default Django uses SQLite for the app database, this was used for development purposes and performing automated tests. The test files can be found in the app directory.
 
 ![Unit Tests Results](docs/testing/unit-test.png)
 
