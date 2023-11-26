@@ -590,6 +590,7 @@ The coverage report was generated using the [Coverage](https://coverage.readthed
 - The multiwidget and multivalue fields in the recipe form were created using [Python – Django: MultiValueField and MultiWidget](https://itecnote.com/tecnote/python-django-multivaluefield-and-multiwidget/) and [Handling multiple input values for single Django form field](https://coderwall.com/p/kq1d5a/handling-multiple-input-values-for-single-django-form-field).
 - The dynamic functionality of the formsets in to recipe form were created using [Adding forms dynamically to a Django formset](https://medium.com/all-about-django/adding-forms-dynamically-to-a-django-formset-375f1090c2b0) and [django-dynamic-formset](https://github.com/elo80ka/django-dynamic-formset).
 - Extra context and querysets were added to views using [When to use get, get_queryset, get_context_data in Django?](https://medium.com/@hassanraza/when-to-use-get-get-queryset-get-context-data-in-django-952df6be036a).
+- Delete success message added using [Stack Overflow](https://stackoverflow.com/questions/24822509/success-message-in-deleteview-not-shown).
 - Automated tests to assert queryset equality were created using [Testing Equality of Django QuerySets: A Guide](https://copyprogramming.com/howto/how-do-i-test-django-querysets-are-equal).
 - The custom error pages were created using advice from my mentor Brian Macharia.
 - The user images failing to upload bug was fixed using [W3Schools](https://www.w3schools.com/tags/att_form_enctype.asp).
