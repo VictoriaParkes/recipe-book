@@ -28,9 +28,7 @@ class Index(ListView):
     template_name = 'index.html'
 
     def get_context_data(self, **kwargs):
-        '''
-        Add extra context of page title.
-        '''
+        # Add extra context of page title.
         context = super().get_context_data(**kwargs)
         context['page_title'] = 'Home'
         return context
@@ -69,10 +67,8 @@ class TagBrowse(ListView):
         return context
 
     def get_queryset(self):
-        '''
-        Return currently published recipes with the tag matching the button
-        value that the user clicked.
-        '''
+        # Return currently published recipes with the tag matching the button
+        # value that the user clicked.
         return Recipe.objects.filter(tags__slug=self.kwargs.get('tag_slug'))
 
 
@@ -89,10 +85,8 @@ class SavedRecipes(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        '''
-        Return currently published recipes that have been saved by the user,
-        in reverse order of saved date.
-        '''
+        # Return currently published recipes that have been saved by the user,
+        # in reverse order of saved date.
         return Recipe.objects.filter(
             saves__user=self.request.user,
             publish_request=True,
@@ -113,10 +107,8 @@ class MyRecipes(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        '''
-        Return all recipes that user has written,
-        in reverse order of created date.
-        '''
+        # Return all recipes that user has written,
+        # in reverse order of created date.
         return Recipe.objects.filter(
             author=self.request.user
         ).order_by('-created_on')
@@ -248,18 +240,16 @@ class RecipeSave(LoginRequiredMixin, View):
 
 
 class CreateRecipe(LoginRequiredMixin, CreateView):
-    """
+    '''
     Allow authenticated user to access create recipe form to submit recipes.
-    """
+    '''
     model = Recipe
     form_class = RecipeDetailsForm
     template_name = 'create_edit_recipe.html'
     success_url = reverse_lazy('my_recipes')
 
     def get_context_data(self, **kwargs):
-        '''
-        Add ingredients formset, method formset and page title to context.
-        '''
+        # Add ingredients formset, method formset and page title to context.
         context = super().get_context_data(**kwargs)
         if self.request.POST:
             context['ingredients_formset'] = IngredientsFormset(
@@ -280,9 +270,7 @@ class CreateRecipe(LoginRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        '''
-        Validate submitted form.
-        '''
+        # Validate submitted form.
         context = self.get_context_data()
         ingredients_formset = context['ingredients_formset']
         method_formset = context['method_formset']
@@ -339,11 +327,11 @@ class RecipeOwnerTest(UserPassesTestMixin):
 
 
 class EditRecipe(LoginRequiredMixin, RecipeOwnerTest, UpdateView):
-    """
+    '''
     Allow authenticated user that passes RecipeOwnerTest to edit recipes.
     Display create recipe form populated with values from the
     recipe being edited.
-    """
+    '''
     model = Recipe
     form_class = RecipeDetailsForm
     template_name = 'create_edit_recipe.html'
